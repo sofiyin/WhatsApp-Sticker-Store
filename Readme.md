@@ -1,5 +1,5 @@
 # Proyecto Whatsapp Sticker Store 🌠
-## Grupo 5
+_Grupo 5_
 
 **Integrantes**
 - Melanie Alexia Cortez Rojas
