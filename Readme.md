@@ -1,6 +1,7 @@
-# Proyecto Tiendita Stickers 🌠
+# Proyecto Whatsapp Sticker Store 🌠
+## Grupo 5
 
 **Integrantes**
-> Melanie Alexia Cortez
-> Sofia Herrera Salazar
-> Jeffrey Antonio Monja Castro
+- Melanie Alexia Cortez Rojas
+- Sofia Brenda Herrera Salazar
+- Jeffrey Antonio Monja Castro
