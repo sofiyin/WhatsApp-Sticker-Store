@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/proyecto'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -65,9 +65,8 @@ class CARRITO(db.Model):
     idcarrito:int
     idcarrito = db.Column(db.Integer, primary_key=True)
 
-    c_usuario_id = db.Column(db.Integer, db.ForeignKey('USUARIO.usuario_id'),primary_key=True)
-    rcarrito_usuario = relationship("USUARIO", backref="CARRITO", primaryjoin="and_(CARRITO.idcarrito == USUARIO.usuario_id, CARRITO.c_usuario_id == USUARIO.id)")
-    rcarrito_usuario = relationship("USUARIO", backref="CARRITO")
+    CAR_USUARIO_id = db.Column(db.Integer, db.ForeignKey('USUARIO.usuario_id'))
+    rcarritoo_usuario = relationship("USUARIO", backref="CARRITO")
 
     def __repr__(self):
         return f'<CARRITO {self.idcarrito}>'
@@ -126,7 +125,7 @@ class PERTENECE(db.Model):
     CARRITO_id = db.Column(db.Integer, db.ForeignKey('CARRITO.idcarrito'),primary_key=True)
     r_Icarrito_pertenece = relationship("CARRITO", backref="PERTENECE")
 
-    CARRITO_user = db.Column(db.Integer, db.ForeignKey('CARRITO.c_usuario_id'),primary_key=True)
+    CARRITO_userr = db.Column(db.Integer, db.ForeignKey('CARRITO.CAR_USUARIO_id'),primary_key=True)
     r_Ucarrito_pertenece = relationship("CARRITO", backref="PERTENECE")
 
     P_USUARIO_id = db.Column(db.Integer, db.ForeignKey('USUARIO.usuario_id'),primary_key=True)
