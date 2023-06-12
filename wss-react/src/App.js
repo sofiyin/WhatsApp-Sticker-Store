@@ -1,5 +1,6 @@
 import { NavBar } from './components/NavBar';
 import { StickersContent } from './components/StickersContent';
+import { StickersInfo } from './components/StickersInfo';
 import './css/App.css';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
 		<>
 			<NavBar />
 			<StickersContent />
+			<StickersInfo />
 		</>
 	);
 }

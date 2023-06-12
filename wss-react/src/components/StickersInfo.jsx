@@ -1,8 +1,9 @@
 import React from 'react'
+import '../css/StickersInfo.css'
 
 export const StickersInfo = () => {
     return (
-        <div>
+        <div className="stickerInfo">
             
         </div>
     )
