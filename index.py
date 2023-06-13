@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/proyecto'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -58,19 +58,6 @@ class CREADOR(db.Model):
     def __repr__(self):
         return f'<CREADOR {self.creador_id}>'
 
-
-@dataclass
-class CARRITO(db.Model):
-    __tablename__ = 'CARRITO'
-    idcarrito:int
-    idcarrito = db.Column(db.Integer, primary_key=True)
-
-    CAR_USUARIO_id = db.Column(db.Integer, db.ForeignKey('USUARIO.usuario_id'))
-    rcarritoo_usuario = relationship("USUARIO", backref="CARRITO")
-
-    def __repr__(self):
-        return f'<CARRITO {self.idcarrito}>'
-
 @dataclass
 class STICKER(db.Model):
     __tablename__ = 'STICKER'
@@ -96,11 +83,29 @@ class STICKER(db.Model):
     def __repr__(self):
         return f'<STICKER {self.idsticker}>'
 
+@dataclass
+class CARRITO(db.Model):
+    __tablename__ = 'CARRITO'
+    idcarrito:int
+    idcarrito = db.Column(db.Integer, primary_key=True)
+
+    STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'), primary_key=True)
+    rsticker_carrito = relationship("STICKER", backref="CARRITO")
+
+    CAR_USUARIO_id = db.Column(db.Integer, db.ForeignKey('USUARIO.usuario_id'), primary_key=True)
+    rcarritoo_usuario = relationship("USUARIO", backref="CARRITO")
+
+    def __repr__(self):
+        return f'<CARRITO {self.idcarrito}>'
+
+@dataclass
 class COMENTARIO(db.Model):
     __tablename__ = 'COMENTARIO'
 
     idcomentario: int
     idcomentario = db.Column(db.Integer, primary_key=True)
+    texto: str
+    texto  = db.Column(db.String(140), nullable = False)
 
     STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'))
     r_sticker_carrito = relationship("STICKER", backref="COMENTARIO")
@@ -108,10 +113,10 @@ class COMENTARIO(db.Model):
     def __repr__(self):
         return f'<COMENTARIO {self.idcomentario}>'
 
+@dataclass
 class PUBLICA(db.Model):
     __tablename__ = 'PUBLICA'
     FechaPublicacion:str
-
     FechaPublicacion = db.Column(db.String(100), nullable=False)
 
     COMENTARIO_id = db.Column(db.Integer, db.ForeignKey('COMENTARIO.idcomentario'),primary_key=True)
@@ -119,18 +124,6 @@ class PUBLICA(db.Model):
 
     P_STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'),primary_key=True)
     r_sticker_publica= relationship("STICKER", backref="PUBLICA")
-
-class PERTENECE(db.Model):
-    __tablename__='PERTENECE'
-    CARRITO_id = db.Column(db.Integer, db.ForeignKey('CARRITO.idcarrito'),primary_key=True)
-    r_Icarrito_pertenece = relationship("CARRITO", backref="PERTENECE")
-
-    CARRITO_userr = db.Column(db.Integer, db.ForeignKey('CARRITO.CAR_USUARIO_id'),primary_key=True)
-    r_Ucarrito_pertenece = relationship("CARRITO", backref="PERTENECE")
-
-    P_USUARIO_id = db.Column(db.Integer, db.ForeignKey('USUARIO.usuario_id'),primary_key=True)
-    r_usuario_pertenece = relationship("USUARIO", backref="PERTENECE")
-
 
 with app.app_context():
         db.create_all()
