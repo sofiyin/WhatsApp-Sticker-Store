@@ -1,10 +1,24 @@
 .stickerInfo {
-    width: 70vw;
-    height: 70vh;
-    background-color: var(--bgcolor-4);
+    width: 75vw;
+    height: 75vh;
+    background-color: var(--bgcolor-2);
     border-radius: 20px;
+    box-shadow: 0px 0px 10px var(--textcolor);
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+}
+
+.stickerInfo-img {
+    background-color: var(--bgcolor-4);
+    border-radius: 20px 0px 0px 20px;
+    padding: 20px;
+    width: 50%;
+}
+
+.stickerInfo-content {
+    padding: 20px;
+    width: 50%;
 }

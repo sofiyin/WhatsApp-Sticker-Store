@@ -1,11 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 import '../css/StickersContent.css'
+import { StickersInfo } from './StickersInfo'
 
 export const StickersContent = () => {
+
+    const [showSticker, setshowSticker] = useState(false)
+
+    const mostrarSticker = () => {
+        setshowSticker(true)
+    }
+
     return (
         <main className="main">
             <div className="gallery">
-                <img onClick={e => console.log("Hello")} 
+                <img id='1' onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/3777622/pexels-photo-3777622.jpeg" 
                 alt="Michi_1" 
                 />
@@ -49,6 +57,8 @@ export const StickersContent = () => {
                 src="https://images.pexels.com/photos/69932/tabby-cat-close-up-portrait-69932.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 alt="Michi_9" 
                 />
+
+                { showSticker && <StickersInfo setshowSticker={setshowSticker}/> }
             </div>
         </main>
     )
