@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost:5432/postgres'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -32,13 +32,13 @@ class PERSONA(db.Model):
     def check_password(self, password):
         return self.password == password
 
-#------------------------------------------------------------------------------
-
 @dataclass
 class USUARIO(db.Model):
     __tablename__ = 'USUARIO'
 
-    usuario_id=db.Column(db.Integer,db.ForeignKey('PERSONA.id'), primary_key=True)
+    usuario_id: int
+
+    usuario_id = db.Column(db.Integer,db.ForeignKey('PERSONA.id'), primary_key=True)
     
     persona = relationship("PERSONA", backref="USUARIO")
 
@@ -48,13 +48,14 @@ class USUARIO(db.Model):
 @dataclass
 class CREADOR(db.Model):
     __tablename__ = 'CREADOR'
-    seguidores: int
-    seguidores= db.Column(db.Integer, nullable=False)
 
-    creador_id=db.Column(db.Integer,db.ForeignKey('PERSONA.id'), primary_key=True)
+    seguidores: int
+
+    seguidores = db.Column(db.Integer, nullable=False)
+
+    creador_id = db.Column(db.Integer,db.ForeignKey('PERSONA.id'), primary_key=True)
     
     persona = relationship("PERSONA", backref="CREADOR")
-
 
     def __repr__(self):
         return f'<CREADOR {self.creador_id}>'
@@ -62,6 +63,7 @@ class CREADOR(db.Model):
 @dataclass
 class STICKER(db.Model):
     __tablename__ = 'STICKER'
+
     idsticker: int
     nombre:str
     descripcion:str
@@ -78,7 +80,7 @@ class STICKER(db.Model):
     Foto = db.Column(db.String(100), nullable=False)
     FechaSubida = db.Column(db.String(100), nullable=False)
 
-    CREADOR_id = db.Column(db.Integer, db.ForeignKey('CREADOR.creador_id'))
+    S_CREADOR_id = db.Column(db.Integer, db.ForeignKey('CREADOR.creador_id'))
     r_CREADOR_CARRITO = relationship("CREADOR", backref="STICKER")
     
     def __repr__(self):
@@ -87,11 +89,10 @@ class STICKER(db.Model):
 @dataclass
 class CARRITO(db.Model):
     __tablename__ = 'CARRITO'
-    idcarrito:int
-    idcarrito = db.Column(db.Integer, primary_key=True)
 
-    STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'), primary_key=True)
-    rsticker_carrito = relationship("STICKER", backref="CARRITO")
+    idcarrito:int
+
+    idcarrito = db.Column(db.Integer, primary_key=True)
 
     CAR_USUARIO_id = db.Column(db.Integer, db.ForeignKey('USUARIO.usuario_id'), primary_key=True)
     rcarritoo_usuario = relationship("USUARIO", backref="CARRITO")
@@ -104,17 +105,14 @@ class COMENTARIO(db.Model):
     __tablename__ = 'COMENTARIO'
 
     idcomentario: int
-    STICKER_id: int
+    COM_STICKER_id: int
     texto: str
 
     idcomentario = db.Column(db.Integer, primary_key=True)
-    texto: str
-    texto  = db.Column(db.String(140), nullable = False)
-
-    STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'), primary_key=True)
-    r_sticker_carrito = relationship("STICKER", backref="COMENTARIO")
-
     texto = db.Column(db.String(100), nullable=False)
+
+    COM_STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'), primary_key=True)
+    r_sticker_carrito = relationship("STICKER", backref="COMENTARIO")
 
     def __repr__(self):
         return f'<COMENTARIO {self.idcomentario}>'
@@ -126,27 +124,33 @@ class PUBLICA(db.Model):
     FechaPublicacion: datetime
 
     FechaPublicacion = db.Column(db.DateTime, nullable=False)
+    
+    P_COMENTARIO_id = db.Column(db.Integer, primary_key=True)
+    P_STICKER_id = db.Column(db.Integer, primary_key=True)
+    P_PERSONA_id = db.Column(db.Integer, db.ForeignKey('PERSONA.id'),primary_key=True)
 
-    COMENTARIO_id = db.Column(db.Integer, db.ForeignKey('COMENTARIO.idcomentario'),primary_key=True)
+    __table_args__ = (
+        db.ForeignKeyConstraint(['P_COMENTARIO_id', 'P_STICKER_id'], ['COMENTARIO.idcomentario', 'COMENTARIO.COM_STICKER_id']),
+    )
 
-    r_sticker_publica= relationship("COMENTARIO", backref="PUBLICA", lazy='joined')
-
-    P_STICKER_id = db.Column(db.Integer, db.ForeignKey('COMENTARIO.STICKER_id'),primary_key=True)
+    r_sticker_publica= relationship("COMENTARIO", backref="PUBLICA")
+    r_persona_publica = relationship("PERSONA", backref="PUBLICA")
 
 
 @dataclass
 class PERTENECE(db.Model):
     __tablename__='PERTENECE'
-    
-    STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'),primary_key=True)
+
+    PE_STICKER_id = db.Column(db.Integer, primary_key=True)
+    PE_CARRITO_id = db.Column(db.Integer, primary_key=True)
+    PE_CARRITO_user = db.Column(db.Integer, primary_key=True)
+
+    __table_args__ = (
+        db.ForeignKeyConstraint(['PE_CARRITO_id', 'PE_CARRITO_user'], ['CARRITO.idcarrito', 'CARRITO.CAR_USUARIO_id']),
+    )
+
     r_sticker_pertenece = relationship("STICKER", backref="PERTENECE")
-
-    CARRITO_id = db.Column(db.Integer, primary_key=True)
-    CARRITO_user = db.Column(db.Integer, primary_key=True)
-
-    carrito = db.relationship("CARRITO", backref="PERTENECE",
-                            primaryjoin="and_(PERTENECE.CARRITO.id == CARRITO.idcarrito, "
-                                        "PERTENECE.CARRITO_user == CARRITO.CAR_USUARIO_id)")
+    r_carrito_pertenece = relationship("CARRITO", backref="PERTENECE")
 
     
 with app.app_context():
