@@ -7,7 +7,9 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -141,7 +143,7 @@ class PUBLICA(db.Model):
 class PERTENECE(db.Model):
     __tablename__='PERTENECE'
 
-    PE_STICKER_id = db.Column(db.Integer, primary_key=True)
+    PE_STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'), primary_key=True)
     PE_CARRITO_id = db.Column(db.Integer, primary_key=True)
     PE_CARRITO_user = db.Column(db.Integer, primary_key=True)
 
@@ -159,7 +161,3 @@ with app.app_context():
 if __name__ == '__main__':
     #app.run(debug=True, port=5000, host='192.168.18.14')
     app.run()
-
-@app.route('/personas')
-def route_personas():
-    return 'hola'

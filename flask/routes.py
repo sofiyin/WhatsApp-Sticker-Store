@@ -1,6 +1,5 @@
 from index import *
 
-
 @app.route('/personas',methods=['GET', 'POST'])
 def route_personas():
     if request.method=='GET':
@@ -13,3 +12,7 @@ def route_personas():
         db.session.add(persona)
         db.session.commit()
         return 'SUCCESS'
+
+if __name__ == '__main__':
+    #app.run(debug=True, port=5000, host='192.168.18.14')
+    app.run()
