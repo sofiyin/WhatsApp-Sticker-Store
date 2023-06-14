@@ -1,5 +1,7 @@
 import React from 'react'
 import '../css/StickersInfo.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 export const StickersInfo = ({setshowSticker}) => {
 
@@ -10,9 +12,10 @@ export const StickersInfo = ({setshowSticker}) => {
     return (
         <div className='stickerInfo'>
             <div className="stickerInfo-img">
-                <button onClick={ocultarSticker}>Enviar mensaje</button>
+                <div className="back" onClick={ocultarSticker}><FontAwesomeIcon icon={faCircleXmark} /></div>
             </div>
             <div className="stickerInfo-maincontent">
+                <div className="stickerInfo-carrito"></div>
                 <div className="stickerInfo-content">
                     <div className="stickerInfo__title"> Title </div>
                     <div className="stickerInfo__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem repellat incidunt, ea maxime sit est iusto beatae? Voluptas consectetur </div>

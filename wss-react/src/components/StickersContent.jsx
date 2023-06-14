@@ -18,7 +18,7 @@ export const StickersContent = () => {
                 alt="Michi_1" 
                 />
                 
-                <img 
+                <img onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 alt="Michi_2" 
                 />

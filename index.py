@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import datetime
 from sqlalchemy import create_engine, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import sessionmaker, relationship
 from flask import Flask, jsonify,  request, render_template
@@ -103,12 +104,17 @@ class COMENTARIO(db.Model):
     __tablename__ = 'COMENTARIO'
 
     idcomentario: int
+    STICKER_id: int
+    texto: str
+
     idcomentario = db.Column(db.Integer, primary_key=True)
     texto: str
     texto  = db.Column(db.String(140), nullable = False)
 
-    STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'))
+    STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'), primary_key=True)
     r_sticker_carrito = relationship("STICKER", backref="COMENTARIO")
+
+    texto = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return f'<COMENTARIO {self.idcomentario}>'
@@ -116,15 +122,33 @@ class COMENTARIO(db.Model):
 @dataclass
 class PUBLICA(db.Model):
     __tablename__ = 'PUBLICA'
-    FechaPublicacion:str
-    FechaPublicacion = db.Column(db.String(100), nullable=False)
+
+    FechaPublicacion: datetime
+
+    FechaPublicacion = db.Column(db.DateTime, nullable=False)
 
     COMENTARIO_id = db.Column(db.Integer, db.ForeignKey('COMENTARIO.idcomentario'),primary_key=True)
-    r_comentario_publica = relationship("COMENTARIO", backref="PUBLICA")
 
-    P_STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'),primary_key=True)
-    r_sticker_publica= relationship("STICKER", backref="PUBLICA")
+    r_sticker_publica= relationship("COMENTARIO", backref="PUBLICA", lazy='joined')
 
+    P_STICKER_id = db.Column(db.Integer, db.ForeignKey('COMENTARIO.STICKER_id'),primary_key=True)
+
+
+@dataclass
+class PERTENECE(db.Model):
+    __tablename__='PERTENECE'
+    
+    STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'),primary_key=True)
+    r_sticker_pertenece = relationship("STICKER", backref="PERTENECE")
+
+    CARRITO_id = db.Column(db.Integer, primary_key=True)
+    CARRITO_user = db.Column(db.Integer, primary_key=True)
+
+    carrito = db.relationship("CARRITO", backref="PERTENECE",
+                            primaryjoin="and_(PERTENECE.CARRITO.id == CARRITO.idcarrito, "
+                                        "PERTENECE.CARRITO_user == CARRITO.CAR_USUARIO_id)")
+
+    
 with app.app_context():
         db.create_all()
 
