@@ -12,14 +12,14 @@
     + **GET** para descargar todos los stickers del carrito
     + **POST** para añadir un sticker al carrito
     + **DELETE** para eliminar un sticker del carrito
-4. Para la tabla `STICKER`:
+4. Para la tabla `STICKER`: (melanie)
     + **GET** para que los stickers se muestren en el main (fetch)
     + **POST** para crear un nuevo sticker
     + **DELETE** para eliminar todos los stickers de un solo creador al borrar la cuenta
     + **GET<id>** para mostrar los stickers de un solo creador
     + **PUT<id>** para actualizar un sticker de un solo creador
     + **DELETE<id>** para eliminar un sticker
-5. Para la tabla `COMENTARIO`:
+5. Para la tabla `COMENTARIO`: (melanie)
     + **GET<id>** para mostrar los comentarios de un sticker
     + **POST** para crear un nuevo comentario
     + **DELETE** para eliminar todos los comentarios de un solo creador al borrar la cuenta
