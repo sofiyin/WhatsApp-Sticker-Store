@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import datetime
 from sqlalchemy import create_engine, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import sessionmaker, relationship
 from flask import Flask, jsonify,  request, render_template
@@ -114,21 +115,23 @@ class COMENTARIO(db.Model):
     def __repr__(self):
         return f'<COMENTARIO {self.idcomentario}>'
 
-# @dataclass
-# class PUBLICA(db.Model):
-#     __tablename__ = 'PUBLICA'
-#     FechaPublicacion:str
+@dataclass
+class PUBLICA(db.Model):
+    __tablename__ = 'PUBLICA'
+    FechaPublicacion: datetime
 
-#     FechaPublicacion = db.Column(db.String(100), nullable=False)
+    FechaPublicacion = db.Column(db.DateTime, nullable=False)
 
-#     COMENTARIO_id = db.Column(db.Integer, db.ForeignKey('COMENTARIO.idcomentario'),primary_key=True)
-#     r_comentario_publica = relationship("COMENTARIO", backref="PUBLICA")
+    COMENTARIO_id = db.Column(db.Integer, db.ForeignKey('COMENTARIO.idcomentario'),primary_key=True)
 
-#     P_STICKER_id = db.Column(db.Integer, db.ForeignKey('COMENTARIO.STICKER_id'),primary_key=True)
-#     r_sticker_publica= relationship("COMENTARIO", backref="PUBLICA")
+    r_sticker_publica= relationship("COMENTARIO", backref="PUBLICA", lazy='joined')
 
-#     PERSONA_id = db.Column(db.Integer, db.ForeignKey('PERSONA.id'),primary_key=True)
-#     r_persona_publica = relationship("PERSONA", backref="PUBLICA")
+    P_STICKER_id = db.Column(db.Integer, db.ForeignKey('COMENTARIO.STICKER_id'),primary_key=True)
+
+    r_sticker_publica= relationship("COMENTARIO", backref="PUBLICA", lazy='joined')
+
+    PERSONA_id = db.Column(db.Integer, db.ForeignKey('PERSONA.id'),primary_key=True)
+    r_persona_publica = relationship("PERSONA", backref="PUBLICA")
 
 @dataclass
 class PERTENECE(db.Model):
