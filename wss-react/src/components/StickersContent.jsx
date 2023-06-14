@@ -23,37 +23,37 @@ export const StickersContent = () => {
                 alt="Michi_2" 
                 />
 
-                <img 
+                <img onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/2173872/pexels-photo-2173872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 alt="Michi_3" 
                 />
 
-                <img 
+                <img onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/384555/pexels-photo-384555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 alt="Michi_4" 
                 />
 
-                <img 
+                <img onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/2361952/pexels-photo-2361952.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 alt="Michi_5" 
                 />
 
-                <img 
+                <img onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/866496/pexels-photo-866496.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 alt="Michi_6" 
                 />
 
-                <img 
+                <img onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/3525298/pexels-photo-3525298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 alt="Michi_7" 
                 />
 
-                <img 
+                <img onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/3712095/pexels-photo-3712095.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 alt="Michi_8" 
                 />
 
-                <img 
+                <img onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/69932/tabby-cat-close-up-portrait-69932.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 alt="Michi_9" 
                 />

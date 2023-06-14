@@ -164,8 +164,10 @@
 
 .stickerInfo-carrito {
     position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: var(--bgcolor-3);
+    color: var(--bgcolor-3);
+    font-size: 2em;
     right: 0;
+    margin-right: 30px;
+    margin-top: 20px;
+    cursor: pointer;
 }
