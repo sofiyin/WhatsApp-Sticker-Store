@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import '../css/StickersContent.css'
 import { StickersInfo } from './StickersInfo'
+import { fetchPersona } from '../fetchs/test_fetch'
+
 
 export const StickersContent = () => {
 
@@ -12,6 +14,17 @@ export const StickersContent = () => {
 
     return (
         <main className="main">
+            <table className="person_table">
+                <thead>
+                    <th>id</th>
+                    <th>username</th>
+                    <th>email</th>
+                    <th>password</th>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
             <div className="gallery">
                 <img id='1' onClick={ mostrarSticker }
                 src="https://images.pexels.com/photos/3777622/pexels-photo-3777622.jpeg" 
