@@ -1,4 +1,8 @@
 from index import *
+from flask import Flask, request
+from flask_cors import CORS 
+
+CORS(app)
 
 @app.route('/personas',methods=['GET', 'POST'])
 def route_personas():

@@ -1,3 +1,14 @@
+.transparent {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(8px);
+}
+
+
 .stickerInfo {
     width: 75vw;
     height: 75vh;
