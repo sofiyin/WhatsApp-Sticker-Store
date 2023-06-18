@@ -1,7 +1,12 @@
 import React from 'react'
+import { NavBar } from './NavBar'
+import '../css/Create.css'
 
 export const Create = () => {
   return (
-    <h1>Create Sticker</h1>
+    <>
+      <NavBar />
+      <h1>HELLO WORLD</h1>
+    </>
   )
 }

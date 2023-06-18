@@ -5,7 +5,9 @@ import '../css/NavBar.css'
 export const NavBar = () => {
   return (
     <nav className="navbar">
-      <div className="navbar-logo"></div>
+      <div className="navbar-logo">
+        <img src={process.env.PUBLIC_URL + 'assets/Logo_wss-t.png'} alt="Logo wss" />
+      </div>
       <div className="navbar-button"><Link to='/home'> Inicio </Link></div>
       <div className="navbar-button"><Link to='/create'> Crear </Link></div>
       <div className="navbar-search">

@@ -18,5 +18,5 @@ def route_personas():
         return 'SUCCESS'
 
 if __name__ == '__main__':
-    #app.run(debug=True, port=5000, host='192.168.18.14')
-    app.run()
+    app.run(debug=True, port=5000, host='0.0.0.0')
+    # app.run()
