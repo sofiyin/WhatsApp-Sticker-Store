@@ -1,4 +1,4 @@
-from index import *
+from init import *
 
 @app.route('/personas',methods=['GET', 'POST'])
 def route_personas():
@@ -43,7 +43,27 @@ def route_personas_id(personas_id):
         db.session.commit()
         return 'SUCCESS'
 
+#STICKER
+@app.route('/stickers', methods = ['GET', 'POST', 'DELETE'])
+def route_stickers():
+    if request.method=='GET':
+        stickers = STICKER.query.all()
+        return jsonify(stickers)
+    
+    elif request.method == 'POST':
+        data = request.get_json()
+        sticker = STICKER(idsticker=data["idsticker"], nombre=data["nombre"],descripcion=data["descripcion"], categoria=data["categoria"], likes = 0, Foto=data["Foto"], FechaSubida=func.now())
+        db.session.add(sticker)
+        db.session.commit()
+        return 'SUCCESS'
 
+@app.route('/stickers/creador/<creador_id>', methods = ['GET', 'DELETE'])
+
+@app.route('/stickers/<sticker_id>', methods = ['GET', 'PUT', 'DELETE'])
+
+@app.route('/stickers/comentario/<sticker_id>', methods = ['GET', 'DElETE', 'POST'])
+
+@app.route('/comentario/<sticker_id>', methods = ['PUT', 'DELETE'])
 
 if __name__ == '__main__':
     #app.run(debug=True, port=5000, host='192.168.18.14')

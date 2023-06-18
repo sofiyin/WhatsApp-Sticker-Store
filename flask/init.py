@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import datetime
 from sqlalchemy import create_engine, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.sql import func
 from flask import Flask, jsonify,  request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import json
@@ -10,7 +11,7 @@ app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY<_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
