@@ -23,15 +23,28 @@ export const Login = () => {
         </div>
         <div className="login-forms__inputs">
           <label htmlFor="username"> Nombre de usuario </label>
-          <input type="text" name="username" id="username" onChange={escribirUsr}/>
+          <input 
+            type="text" 
+            name="username" 
+            id="username" 
+            placeholder='Escribe tu nombre de usuario'
+            onChange={escribirUsr}/>
           <div className="username-warnings"></div>
 
           <label htmlFor="email"> Correo </label>
-          <input type="text" name="email" id="email" />
+          <input 
+            type="text" 
+            name="email" 
+            id="email"
+            placeholder='Escribe tu correo' />
           <div className="email-warnings"></div>
 
           <label htmlFor="password"> Contraseña </label>
-          <input type="text" name="password" id="password" />
+          <input 
+            type="text" 
+            name="password" 
+            id="password"
+            placeholder='Ingresa una contraseña' />
           <div className="password-warnings"></div>
         </div>
         <div className="login-forms__submit">

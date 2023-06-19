@@ -77,3 +77,8 @@
   border-radius: 30px;
   cursor: pointer;
 }
+
+.login-forms__submit a {
+  color: var(--textcolor);
+  text-decoration: none;
+}
