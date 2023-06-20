@@ -11,7 +11,7 @@ app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
 
-app.config['SQLALCHEMY<_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY<@_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 

@@ -56,14 +56,22 @@ def route_stickers():
         db.session.add(sticker)
         db.session.commit()
         return 'SUCCESS'
+    
+    elif request.method == 'DELETE':
+        stickers = STICKER.query.all()
+        for sticker in stickers:
+            db.session.delete(sticker)
+        db.session.commit()
+        return 'SUCCESS'
 
-@app.route('/stickers/creador/<creador_id>', methods = ['GET', 'DELETE'])
+#@app.route('/stickers/creador/<creador_id>', methods = ['GET', 'DELETE'])
 
-@app.route('/stickers/<sticker_id>', methods = ['GET', 'PUT', 'DELETE'])
+#@app.route('/stickers/<sticker_id>', methods = ['GET', 'PUT', 'DELETE'])
 
-@app.route('/stickers/comentario/<sticker_id>', methods = ['GET', 'DElETE', 'POST'])
 
-@app.route('/comentario/<sticker_id>', methods = ['PUT', 'DELETE'])
+#@app.route('/stickers/comentario/<sticker_id>', methods = ['GET', 'DElETE', 'POST'])
+
+#@app.route('/comentario/<sticker_id>', methods = ['PUT', 'DELETE'])
 
 if __name__ == '__main__':
     #app.run(debug=True, port=5000, host='192.168.18.14')
