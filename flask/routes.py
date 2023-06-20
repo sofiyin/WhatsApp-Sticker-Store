@@ -66,11 +66,10 @@ def route_stickers():
 
 @app.route('/stickers/creador/<creador_id>', methods = ['GET', 'DELETE'])
 def route_stickers_creador_id(creador_id):
-    session = Session()
     filas = STICKER.query.get_or_404(creador_id)
-    if method=='GET':
+    if request.method=='GET':
         return jsonify(filas)
-    elif method == 'DELETE':
+    elif request.method == 'DELETE':
         for fila in filas:
             db.session.delete(fila)
         db.commit()
