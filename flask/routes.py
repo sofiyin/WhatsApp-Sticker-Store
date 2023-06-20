@@ -48,7 +48,8 @@ def route_carritos_id(carritos_id):
     if request.method == 'GET':
         carritos = CARRITO.query.filter_by(idcarrito=carritos_id).first()
         return jsonify(carritos)
-"""   
+"""
+
 @app.route('/pertenece',methods=['GET','POST'])
 def route_pertenece():
     if request.method=='GET':
@@ -61,8 +62,7 @@ def route_pertenece():
         db.session.add(nuevo)
         db.session.commit()
         return 'SUCCESS' 
- 
-   
+
 @app.route('/pertenece/<PE_STICKER_id>', methods=['DELETE'])
 def route_pertenece_id(PE_STICKER_id):
     if request.method == 'DELETE':
@@ -72,7 +72,6 @@ def route_pertenece_id(PE_STICKER_id):
         return 'SUCCESS'          
 
 """
-
 
 
 
@@ -107,6 +106,24 @@ def route_stickers_creador_id(creador_id):
             db.session.delete(fila)
         db.commit()
         return 'SUCCESS'
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        data=request.get_json()
+        correo = data['correo']
+        username = data['username']
+        password = data['password']
+        try:
+            new_user = PERSONA(correo=correo,username=username, password=password)
+            db.session.add(new_user)
+            db.session.commit()
+            return 'SUCCESS'
+        except:
+            error_message = 'Ya existe este nombre de usuario.'
+            return render_template('register.html', error_message=error_message)
+
+        
 
 #@app.route('/stickers/<sticker_id>', methods = ['GET', 'PUT', 'DELETE'])
 

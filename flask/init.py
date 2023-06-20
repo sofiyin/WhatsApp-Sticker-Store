@@ -3,7 +3,7 @@ import datetime
 from sqlalchemy import create_engine, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.sql import func
-from flask import Flask, jsonify,  request, render_template
+from flask import Flask, jsonify,  request, render_template,session,redirect
 from flask_sqlalchemy import SQLAlchemy
 import json
 app = Flask(__name__)
@@ -26,7 +26,7 @@ class PERSONA(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     correo = db.Column(db.String(100), nullable=False)
-    username = db.Column(db.String(100), nullable=False)
+    username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
     
     def __repr__(self):
@@ -155,7 +155,21 @@ class PERTENECE(db.Model):
     r_sticker_pertenece = relationship("STICKER", backref="PERTENECE")
     r_carrito_pertenece = relationship("CARRITO", backref="PERTENECE")
 
-    
+
+def insert_usuario(data):
+    usuario = USUARIO(username=data["username"], password=data["password"])
+    db.session.add(usuario)
+    db.session.commit()
+    return "SUCCESS"
+
+def insert_creador(data):
+    creador = USUARIO(username=data["username"], password=data["password"])
+    db.session.add(creador)
+    db.session.commit()
+    return "SUCCESS"
+
+
+
 with app.app_context():
         db.create_all()
 
