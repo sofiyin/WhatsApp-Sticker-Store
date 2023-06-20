@@ -12,7 +12,7 @@ def route_personas():
     
     elif request.method == 'POST':
         data = request.get_json()
-        persona = PERSONA(id=data["id"], correo=data["correo"],username=data["username"], password=data["password"])
+        persona = PERSONA(username=data["username"], correo=data["correo"], password=data["password"])
         db.session.add(persona)
         db.session.commit()
         return 'SUCCESS'

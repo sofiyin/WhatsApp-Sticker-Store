@@ -26,7 +26,7 @@ class PERSONA(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     correo = db.Column(db.String(100), nullable=False)
-    username = db.Column(db.String(100), nullable=False)
+    username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
     
     def __repr__(self):
