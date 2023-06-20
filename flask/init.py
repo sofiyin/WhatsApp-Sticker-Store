@@ -24,7 +24,7 @@ class PERSONA(db.Model):
     username: str
     password: str
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     correo = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(100), nullable=False)
@@ -75,7 +75,7 @@ class STICKER(db.Model):
     Foto:str
     FechaSubida:str
 
-    idsticker = db.Column(db.Integer, primary_key=True)
+    idsticker = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.String(100), nullable=False)
     categoria = db.Column(db.String(100), nullable=False)
@@ -95,7 +95,7 @@ class CARRITO(db.Model):
 
     idcarrito:int
 
-    idcarrito = db.Column(db.Integer, primary_key=True)
+    idcarrito = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     CAR_USUARIO_id = db.Column(db.Integer, db.ForeignKey('USUARIO.usuario_id'), primary_key=True)
     rcarritoo_usuario = relationship("USUARIO", backref="CARRITO")
@@ -111,7 +111,7 @@ class COMENTARIO(db.Model):
     COM_STICKER_id: int
     texto: str
 
-    idcomentario = db.Column(db.Integer, primary_key=True)
+    idcomentario = db.Column(db.Integer, primary_key=True, autoincrement=True)
     texto = db.Column(db.String(100), nullable=False)
 
     COM_STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'), primary_key=True)
