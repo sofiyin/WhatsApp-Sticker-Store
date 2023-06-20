@@ -4,8 +4,8 @@ import { NavBar } from './NavBar'
 import '../css/Home.css'
 
 export const Home = () => {
-
   const [showSticker, setshowSticker] = useState(false)
+  const [users, setUsers] = useState([])
 
   const mostrarSticker = () => {
     setshowSticker(!showSticker)
@@ -13,19 +13,25 @@ export const Home = () => {
 
   // Función asíncrona para hacer fetch a flask:
   const fetchStickers = async () => {
-    const result = await fetch('http://192.168.0.11:5000/personas')
+    const result = await fetch('http://localhost:5000/personas')
     const body = await result.json()
     
-    console.log(body);
+    return body
+  }
+
+  const usuarios = async () => {
+    const result = await fetchStickers()
+    setUsers(result)
   }
 
   useEffect (() => {
-    fetchStickers()
+    usuarios()
+    console.log(users);
 
     return () => {
       
     }
-  })
+  }, [])
 
   return (
     <>
@@ -41,7 +47,12 @@ export const Home = () => {
             </tr>
           </thead>
           <tbody>
-
+            <tr>
+              {/* <td>{users[0].id}</td>
+              <td>{users[0].username}</td>
+              <td>{users[0].correo}</td>
+              <td>{users[0].password}</td> */}
+            </tr>
           </tbody>
         </table>
         <div className="gallery">
