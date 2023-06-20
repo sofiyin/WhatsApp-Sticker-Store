@@ -43,6 +43,39 @@ def route_personas_id(personas_id):
         db.session.commit()
         return 'SUCCESS'
 
+@app.route('/carritos/<carritos_id>', methods=['GET'])
+def route_carritos_id(carritos_id):
+    if request.method == 'GET':
+        carritos = CARRITO.query.filter_by(idcarrito=carritos_id).first()
+        return jsonify(carritos)
+"""   
+@app.route('/pertenece',methods=['GET','POST'])
+def route_pertenece():
+    if request.method=='GET':
+        pertenece = PERTENECE.query.all()
+        return jsonify(pertenece)
+    
+    elif request.method == 'POST':
+        data = request.get_json()
+        nuevo = PERTENECE(PE_STICKER_id=data["PE_STICKER_id"], PE_CARRITO_id=data["PE_CARRITO_id"], PE_CARRITO_user=data["PE_CARRITO_user"])
+        db.session.add(nuevo)
+        db.session.commit()
+        return 'SUCCESS' 
+ 
+   
+@app.route('/pertenece/<PE_STICKER_id>', methods=['DELETE'])
+def route_pertenece_id(PE_STICKER_id):
+    if request.method == 'DELETE':
+        stickers=PERTENECE.query.get_or_404(PE_STICKER_id)
+        db.session.delete(stickers)
+        db.session.commit()
+        return 'SUCCESS'          
+
+"""
+
+
+
+
 #STICKER
 @app.route('/stickers', methods = ['GET', 'POST', 'DELETE'])
 def route_stickers():
