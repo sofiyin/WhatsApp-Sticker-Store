@@ -64,10 +64,21 @@ def route_stickers():
         db.session.commit()
         return 'SUCCESS'
 
-#@app.route('/stickers/creador/<creador_id>', methods = ['GET', 'DELETE'])
+@app.route('/stickers/creador/<creador_id>', methods = ['GET', 'DELETE'])
+def route_stickers_creador_id(creador_id):
+    session = Session()
+
+    table = session.query(STICKERS, CREADOR).join(CREADOR)
+    filas = table.query.get_or_404(creador_id)
+    if method=='GET':
+        return jsonify(filas)
+    elif method == 'DELETE':
+        for fila in filas:
+            db.session.delete(fila)
+        db.commit()
+        return 'SUCCESS'
 
 #@app.route('/stickers/<sticker_id>', methods = ['GET', 'PUT', 'DELETE'])
-
 
 #@app.route('/stickers/comentario/<sticker_id>', methods = ['GET', 'DElETE', 'POST'])
 
