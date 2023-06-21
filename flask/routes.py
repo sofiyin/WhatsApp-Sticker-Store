@@ -43,6 +43,16 @@ def route_personas_id(personas_id):
         db.session.commit()
         return 'SUCCESS'
 
+@app.route('/usuarios', methods = ['GET', 'POST'])
+def route_usuarios():
+    if request.method == 'POST':
+        data = request.get_json()
+        usuario = USUARIO(username=data["username"], password=data["password"])
+        db.session.add(usuario)
+        db.session.commit()
+        return 'SUCCESS'
+
+
 @app.route('/carritos/<carritos_id>', methods=['GET'])
 def route_carritos_id(carritos_id):
     if request.method == 'GET':
@@ -115,8 +125,11 @@ def register():
         username = data['username']
         password = data['password']
         try:
-            new_user = PERSONA(correo=correo,username=username, password=password)
-            db.session.add(new_user)
+            new_persona = PERSONA(correo=correo,username=username, password=password)
+            db.session.add(new_persona)
+            db.session.commit()
+            new_usuario = USUARIO(usuario_id = new_persona.id)
+            db.session.add(new_usuario)
             db.session.commit()
             return 'SUCCESS'
         except:
