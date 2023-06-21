@@ -3,6 +3,8 @@ import { StickersInfo } from './StickersInfo'
 import { NavBar } from './NavBar'
 import '../css/Home.css'
 
+const BACKEND_URL = 'http://localhost:5000'
+
 export const Home = () => {
   const [showSticker, setshowSticker] = useState(false)
   const [users, setUsers] = useState([])
@@ -13,7 +15,7 @@ export const Home = () => {
 
   // Función asíncrona para hacer fetch a flask:
   const fetchStickers = async () => {
-    const result = await fetch('http://localhost:5000/personas')
+    const result = await fetch(`${BACKEND_URL}/personas`)
     const body = await result.json()
     
     return body
@@ -47,12 +49,14 @@ export const Home = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              {/* <td>{users[0].id}</td>
-              <td>{users[0].username}</td>
-              <td>{users[0].correo}</td>
-              <td>{users[0].password}</td> */}
-            </tr>
+            {users.map((person) => (
+              <tr key={person.id}>
+                <td>{person.id}</td>
+                <td>{person.username}</td>
+                <td>{person.correo}</td>
+                <td>{person.password}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <div className="gallery">

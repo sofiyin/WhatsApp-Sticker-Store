@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 import "../css/Login.css"
 
 const BACKEND_URL = 'http://localhost:5000'
@@ -11,11 +11,7 @@ export const Login = () => {
   const [loggeo, setLoggeo] = useState(true)
   const navigate = useNavigate()
 
-  const [errors, setErrors] = useState({
-    username: "",
-    correo: "",
-    password: ""
-  })
+  const [errors, setErrors] = useState({})
 
   function validateForm() {
     let temp = {
