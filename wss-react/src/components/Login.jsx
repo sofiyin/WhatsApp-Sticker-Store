@@ -11,40 +11,46 @@ export const Login = () => {
   const [loggeo, setLoggeo] = useState(true)
   const navigate = useNavigate()
 
-  const errors = {
+  const [errors, setErrors] = useState({
     username: "",
     correo: "",
     password: ""
-  }
+  })
 
   function validateForm() {
+    let temp = {
+      username: "",
+      correo: "",
+      password: ""
+    }
+
+    let valido = true
+
     if (username === "") {
-      errors.username = "Ingresa un username";
-      return false
+      temp.username = "Ingresa un username"
+      valido = false
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(correo)) {
-      errors.correo = "Ingresa un correo válido"
-      return false
+      temp.correo = "Ingresa un correo válido"
+      valido = false
     }
 
     if (password === "") {
-      errors.password = "Ingresa una contraseña"
-      return false
+      temp.password = "Ingresa una contraseña"
+      valido = false
 
     } else if (password.length < 6) {
-      errors.password = "La contraseña debe tener al menos 6 caracteres"
-      return false
+      temp.password = "La contraseña debe tener al menos 6 caracteres"
+      valido = false
     }
     
-    return true;
+    setErrors(temp)
+
+    return valido;
   }
 
-  const newUserTemp = () => {
-    const valid = validateForm()
-    console.log(valid)
-  }
 
   // Función para hacer POST de un nuevo usuario
   const newUser = async () => {
@@ -68,7 +74,15 @@ export const Login = () => {
     } else {
       console.log('Error al crear el usuario')
     }
-  }  
+  }
+  
+  const submit = () => {
+    if (validateForm()) {
+      newUser()
+    } else {
+      console.log('Formulario inválido')
+    }
+  }
 
   return (
     <div className="login">
@@ -88,7 +102,7 @@ export const Login = () => {
             id="username"
             placeholder='Escribe tu nombre de usuario'
             onChange={ e => setUsername(e.target.value) }/>
-          <div className="username-warnings"></div>
+          <div className="warnings"> { errors.username } </div>
 
           <label htmlFor="email" className={loggeo ? "enable" : "disable"}> Correo </label>
           <input 
@@ -97,7 +111,7 @@ export const Login = () => {
             id="email"
             placeholder='Escribe tu correo'
             onChange={ e => setCorreo(e.target.value) } />
-          <div className="email-warnings"></div>
+          <div className={`warnings ${loggeo ? "enable" : "disable"}`} > { errors.correo } </div>
 
           <label htmlFor="password"> Contraseña </label>
           <input 
@@ -105,10 +119,10 @@ export const Login = () => {
             id="password"
             placeholder='Ingresa una contraseña'
             onChange={ e => setPassword(e.target.value )} />
-          <div className="password-warnings"></div>
+          <div className="warnings"> { errors.password } </div>
         </div>
         <div className="login-forms__submit">
-          <div onClick={ newUserTemp }> Ingresar </div>
+          <div onClick={ submit }> Ingresar </div>
         </div>
       </div>
     </div>
