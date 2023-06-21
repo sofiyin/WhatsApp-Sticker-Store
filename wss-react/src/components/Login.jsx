@@ -75,7 +75,7 @@ export const Login = () => {
           {/*<Link to='/home'> Ingresar </Link>
           onClick={ newUser(arr) }
           */}
-          <div> Ingresar </div>
+          <div onClick={ () => newUser(arr) }> Ingresar </div>
         </div>
       </div>
     </div>
