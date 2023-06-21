@@ -45,6 +45,11 @@ def route_personas_id(personas_id):
 
 @app.route('/usuarios', methods = ['GET', 'POST'])
 def route_usuarios():
+
+    if request.method == 'GET':
+        usuarios = USUARIO.query.all()
+        return jsonify(usuarios)
+    
     if request.method == 'POST':
         data = request.get_json()
         usuario = USUARIO(username=data["username"], password=data["password"])
@@ -117,8 +122,8 @@ def route_stickers_creador_id(creador_id):
         db.commit()
         return 'SUCCESS'
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
+@app.route('/register-user', methods=['GET', 'POST'])
+def registeruser():
     if request.method == 'POST':
         data=request.get_json()
         correo = data['correo']
@@ -135,6 +140,27 @@ def register():
         except:
             error_message = 'Ya existe este nombre de usuario.'
             return render_template('register.html', error_message=error_message)
+
+@app.route('/register-creador', methods=['GET', 'POST'])
+def registercreador():
+    if request.method == 'POST':
+        data=request.get_json()
+        correo = data['correo']
+        username = data['username']
+        password = data['password']
+        try:
+            new_persona = PERSONA(correo=correo,username=username, password=password)
+            db.session.add(new_persona)
+            db.session.commit()
+            new_usuario = CREADOR(creador_id = new_persona.id)
+            db.session.add(new_usuario)
+            db.session.commit()
+            return 'SUCCESS'
+        except:
+            error_message = 'Ya existe este nombre de usuario.'
+            return render_template('register.html', error_message=error_message)
+
+       
 
         
 
