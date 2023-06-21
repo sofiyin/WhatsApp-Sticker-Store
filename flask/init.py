@@ -8,8 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
 
 app.config['SQLALCHEMY<@_TRACK_MODIFICATIONS'] = False
 
@@ -45,6 +45,12 @@ class USUARIO(db.Model):
 
     USUARIOusername = db.Column(db.String, db.ForeignKey('PERSONA.username'))
     rusername_persona = relationship("PERSONA", backref="USUARIO")
+
+    USUARIOpassword = db.Column(db.String, db.ForeignKey('PERSONA.password'))
+    rpassword_persona = relationship("PERSONA", backref="USUARIO")
+
+    USUARIOcorreo = db.Column(db.String, db.ForeignKey('PERSONA.correo'))
+    rcorreo_persona = relationship("PERSONA", backref="USUARIO")
     
     persona = relationship("PERSONA", backref="USUARIO")
 
@@ -61,6 +67,15 @@ class CREADOR(db.Model):
 
     creador_id = db.Column(db.Integer,db.ForeignKey('PERSONA.id'), primary_key=True)
     
+    CREADORusername = db.Column(db.String, db.ForeignKey('PERSONA.username'))
+    rusername_persona = relationship("PERSONA", backref="CREADOR")
+
+    CREADORpassword = db.Column(db.String, db.ForeignKey('PERSONA.password'))
+    rpassword_persona = relationship("PERSONA", backref="CREADOR")
+
+    CREADORcorreo = db.Column(db.String, db.ForeignKey('PERSONA.correo'))
+    rcorreo_persona = relationship("PERSONA", backref="CREADOR")
+
     persona = relationship("PERSONA", backref="CREADOR")
 
     def __repr__(self):
