@@ -8,8 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
 
 app.config['SQLALCHEMY<@_TRACK_MODIFICATIONS'] = False
 
@@ -43,7 +43,7 @@ class USUARIO(db.Model):
 
     usuario_id = db.Column(db.Integer,db.ForeignKey('PERSONA.id'), primary_key=True)
 
-    USUARIOusername = db.Column(db.Integer, db.ForeignKey('PERSONA.username'))
+    USUARIOusername = db.Column(db.String, db.ForeignKey('PERSONA.username'))
     rusername_persona = relationship("PERSONA", backref="USUARIO")
     
     persona = relationship("PERSONA", backref="USUARIO")
