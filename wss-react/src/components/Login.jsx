@@ -1,27 +1,62 @@
 import React, {useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import "../css/Login.css"
+
+const BACKEND_URL = 'http://localhost:5000'
 
 export const Login = () => {
   const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
+  const [correo, setCorreo] = useState('')
   const [password, setPassword] = useState('')
   const [loggeo, setLoggeo] = useState(true)
+  const navigate = useNavigate()
 
-  const arr = [username, email, password, loggeo]
-  console.log(arr)
+  const errors = {
+    username: "",
+    correo: "",
+    password: ""
+  }
+
+  function validateForm() {
+    if (username === "") {
+      errors.username = "Ingresa un username";
+      return false
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(correo)) {
+      errors.correo = "Ingresa un correo válido"
+      return false
+    }
+
+    if (password === "") {
+      errors.password = "Ingresa una contraseña"
+      return false
+
+    } else if (password.length < 6) {
+      errors.password = "La contraseña debe tener al menos 6 caracteres"
+      return false
+    }
+    
+    return true;
+  }
+
+  const newUserTemp = () => {
+    const valid = validateForm()
+    console.log(valid)
+  }
 
   // Función para hacer POST de un nuevo usuario
-  const newUser = async (arr) => {
+  const newUser = async () => {
     const data = {
-      username: arr[0],
-      correo: arr[1],
-      password: arr[2]
+      username,
+      correo,
+      password
     }
 
     console.log(data)
 
-    const result = await fetch('http://localhost:5000/personas', {
+    const result = await fetch(`${BACKEND_URL}/personas`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }
@@ -29,6 +64,7 @@ export const Login = () => {
 
     if (result.ok) {
       console.log('Usuario creado')
+      navigate('/home')
     } else {
       console.log('Error al crear el usuario')
     }
@@ -60,7 +96,7 @@ export const Login = () => {
             type="text" 
             id="email"
             placeholder='Escribe tu correo'
-            onChange={ e => setEmail(e.target.value) } />
+            onChange={ e => setCorreo(e.target.value) } />
           <div className="email-warnings"></div>
 
           <label htmlFor="password"> Contraseña </label>
@@ -72,10 +108,7 @@ export const Login = () => {
           <div className="password-warnings"></div>
         </div>
         <div className="login-forms__submit">
-          {/*<Link to='/home'> Ingresar </Link>
-          onClick={ newUser(arr) }
-          */}
-          <div onClick={ () => newUser(arr) }> Ingresar </div>
+          <div onClick={ newUserTemp }> Ingresar </div>
         </div>
       </div>
     </div>
