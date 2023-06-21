@@ -42,6 +42,9 @@ class USUARIO(db.Model):
     usuario_id: int
 
     usuario_id = db.Column(db.Integer,db.ForeignKey('PERSONA.id'), primary_key=True)
+
+    USUARIOusername = db.Column(db.Integer, db.ForeignKey('PERSONA.username'))
+    rusername_persona = relationship("PERSONA", backref="USUARIO")
     
     persona = relationship("PERSONA", backref="USUARIO")
 
