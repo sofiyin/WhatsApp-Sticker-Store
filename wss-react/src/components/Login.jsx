@@ -8,28 +8,6 @@ export const Login = () => {
   const [password, setPassword] = useState('')
   const [loggeo, setLoggeo] = useState(true)
 
-  // Funciones para cambiar entre iniciar sesión y registrarse
-  const logIn = () => {
-    setLoggeo(true)
-  }
-
-  const signUp = () => {
-    setLoggeo(false)
-  }
-
-  // Funciones para extraer los datos
-  const escribirUsername = (e) => {
-    setUsername(e.target.value)
-  }
-
-  const escribirEmail = (e) => {
-    setEmail(e.target.value)
-  }
-
-  const escribirPassword = (e) => {
-    setPassword(e.target.value)
-  }
-
   const arr = [username, email, password, loggeo]
   console.log(arr)
 
@@ -37,9 +15,11 @@ export const Login = () => {
   const newUser = async (arr) => {
     const data = {
       username: arr[0],
-      email: arr[1],
+      correo: arr[1],
       password: arr[2]
     }
+
+    console.log(data)
 
     const result = await fetch('http://localhost:5000/personas', {
       method: 'POST',
@@ -62,41 +42,40 @@ export const Login = () => {
           <h2>WhatsApp Sticker Store</h2>    
         </div>
         <div className="login-forms__buttons">
-          <div onClick={logIn}>Iniciar Sesión</div>
-          <div onClick={signUp}>Registrarse</div>
+          <div onClick={ () => setLoggeo(false) }>Iniciar Sesión</div>
+          <div onClick={ () => setLoggeo(true) }>Registrarse</div>
         </div>
         <div className="login-forms__inputs">
           <label htmlFor="username"> Nombre de usuario </label>
           <input 
-            type="text" 
-            name="username" 
-            id="username" 
+            type="text"  
+            id="username"
             placeholder='Escribe tu nombre de usuario'
-            onChange={escribirUsername}/>
+            onChange={ e => setUsername(e.target.value) }/>
           <div className="username-warnings"></div>
 
           <label htmlFor="email" className={loggeo ? "enable" : "disable"}> Correo </label>
           <input 
             className={loggeo ? "enable" : "disable"}
             type="text" 
-            name="email" 
             id="email"
             placeholder='Escribe tu correo'
-            onChange={escribirEmail} />
+            onChange={ e => setEmail(e.target.value) } />
           <div className="email-warnings"></div>
 
           <label htmlFor="password"> Contraseña </label>
           <input 
-            type="text" 
-            name="password" 
+            type="password" 
             id="password"
             placeholder='Ingresa una contraseña'
-            onChange={escribirPassword} />
+            onChange={ e => setPassword(e.target.value )} />
           <div className="password-warnings"></div>
         </div>
         <div className="login-forms__submit">
-          {/*<Link to='/home'> Ingresar </Link>*/}
-          <div onClick={ newUser }> Ingresar </div>
+          {/*<Link to='/home'> Ingresar </Link>
+          onClick={ newUser(arr) }
+          */}
+          <div> Ingresar </div>
         </div>
       </div>
     </div>
