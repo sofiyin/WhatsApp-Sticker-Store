@@ -91,18 +91,11 @@ def route_pertenece_id(PE_STICKER_id):
 
 
 #STICKER
-@app.route('/stickers', methods = ['GET', 'POST', 'DELETE'])
+@app.route('/stickers', methods = ['GET', 'DELETE'])
 def route_stickers():
     if request.method=='GET':
         stickers = STICKER.query.all()
         return jsonify(stickers)
-    
-    elif request.method == 'POST':
-        data = request.get_json()
-        sticker = STICKER(idsticker=data["idsticker"], nombre=data["nombre"],descripcion=data["descripcion"], categoria=data["categoria"], likes = 0, Foto=data["Foto"], FechaSubida=func.now())
-        db.session.add(sticker)
-        db.session.commit()
-        return 'SUCCESS'
     
     elif request.method == 'DELETE':
         stickers = STICKER.query.all()
@@ -111,12 +104,19 @@ def route_stickers():
         db.session.commit()
         return 'SUCCESS'
 
-@app.route('/stickers/creador/<creador_id>', methods = ['GET', 'DELETE'])
+@app.route('/stickers-creador/<creador_id>', methods = ['GET', 'POST', 'DELETE'])
 def route_stickers_creador_id(creador_id):
-    filas = STICKER.query.get_or_404(creador_id)
     if request.method=='GET':
+        filas = STICKER.query.filter_by(S_CREADOR_id=creador_id).all()
         return jsonify(filas)
+    elif request.method == 'POST':
+        data = request.get_json()
+        sticker = STICKER(nombre=data["nombre"],descripcion=data["descripcion"], categoria=data["categoria"], likes = 0, Foto=data["Foto"], FechaSubida=func.now(), S_CREADOR_id = creador_id)
+        db.session.add(sticker)
+        db.session.commit()
+        return 'SUCCESS'
     elif request.method == 'DELETE':
+        filas = STICKER.query.filter_by(S_CREADOR_id=creador_id).all()
         for fila in filas:
             db.session.delete(fila)
         db.commit()

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import datetime
-from sqlalchemy import create_engine, ForeignKey, UniqueConstraint
+from sqlalchemy import select, and_, or_, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.sql import func
 from flask import Flask, jsonify,  request, render_template,session,redirect
@@ -8,8 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
 
 app.config['SQLALCHEMY<@_TRACK_MODIFICATIONS'] = False
 
@@ -54,7 +54,7 @@ class CREADOR(db.Model):
 
     seguidores: int
 
-    seguidores = db.Column(db.Integer, nullable=False)
+    seguidores = db.Column(db.Integer, default=0)
 
     creador_id = db.Column(db.Integer,db.ForeignKey('PERSONA.id'), primary_key=True)
     
