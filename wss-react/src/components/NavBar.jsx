@@ -1,21 +1,42 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { UserInfo } from './UserInfo'
+import { Link, useLocation  } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faCartShopping, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import '../css/NavBar.css'
 
 export const NavBar = () => {
+  const [showUserInfo, setshowUserInfo] = useState(false)
+  const [activeButton, setActiveButton] = useState('inicio')
+  const location = useLocation()
+
+  useEffect(() => {
+    location.pathname === '/home' ? setActiveButton('inicio') : setActiveButton('crear')
+  })
+
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <img src={process.env.PUBLIC_URL + 'assets/Logo_wss-t.png'} alt="Logo wss" />
+        <img src={process.env.PUBLIC_URL + 'http://localhost:3000/assets/Logo_wss-t.png'} alt="Logo wss" />
       </div>
-      <div className="navbar-button"><Link to='/home'> Inicio </Link></div>
-      <div className="navbar-button"><Link to='/create'> Crear </Link></div>
+      <Link to='/home'><div
+        className={`navbar-button ${activeButton === 'inicio' ? 'active' : ''}`}
+        onClick={() => setActiveButton('inicio')} 
+      > Inicio </div> </Link>
+      <Link to='/create'><div 
+        className={`navbar-button ${activeButton === 'crear' ? 'active' : ''}`}
+        onClick={() => setActiveButton('crear')}
+      > Crear </div></Link>
       <div className="navbar-search">
-        <div className="navbar-search__icon"></div>
+        <div className="navbar-search__icon"><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
         <input type="text" className="navbar-search__input" placeholder="Buscar"/>
       </div>            
-      <div className="navbar-carrito"></div>
-      <div className="navbar-perfil"></div>            
+      <div className="navbar-carrito"><FontAwesomeIcon icon={faCartShopping} /></div>
+      <div 
+        className="navbar-perfil"
+        onClick={ () => setshowUserInfo(!showUserInfo) }
+      ><FontAwesomeIcon icon={faUser} /></div>     
+      { showUserInfo && <UserInfo /> }
     </nav>
   )
 }

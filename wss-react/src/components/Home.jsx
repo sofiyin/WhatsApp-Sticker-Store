@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { StickersInfo } from './StickersInfo'
 import { NavBar } from './NavBar'
+import { useParams } from 'react-router-dom'
 import '../css/Home.css'
 
 const BACKEND_URL = 'http://localhost:5000'
@@ -8,6 +9,8 @@ const BACKEND_URL = 'http://localhost:5000'
 export const Home = () => {
   const [showSticker, setshowSticker] = useState(false)
   const [users, setUsers] = useState([])
+  const Params = useParams()
+  console.log(Params.id)
 
   const mostrarSticker = () => {
     setshowSticker(!showSticker)
@@ -28,7 +31,6 @@ export const Home = () => {
 
   useEffect (() => {
     usuarios()
-    console.log(users);
 
     return () => {
       

@@ -15,7 +15,7 @@ def route_personas():
         persona = PERSONA(username=data["username"], correo=data["correo"], password=data["password"])
         db.session.add(persona)
         db.session.commit()
-        return 'SUCCESS'
+        return jsonify(persona)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')

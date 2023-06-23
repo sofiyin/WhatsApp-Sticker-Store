@@ -1,0 +1,10 @@
+.main-user {
+  background-color: var(--bgcolor-2);
+  width: 200px;
+  border-radius: 10px;
+  padding: 10px;
+  position: absolute;
+  right: 20px;
+  top: 70px;
+  z-index: 2;
+}

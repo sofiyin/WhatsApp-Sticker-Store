@@ -1,17 +1,16 @@
 import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
 import "../css/Login.css"
 
 const BACKEND_URL = 'http://localhost:5000'
 
-export const Login = () => {
+export const Login = ({setactiveUser}) => {
   const [username, setUsername] = useState('')
   const [correo, setCorreo] = useState('')
   const [password, setPassword] = useState('')
   const [loggeo, setLoggeo] = useState(true)
-  const navigate = useNavigate()
 
   const [errors, setErrors] = useState({})
+  const [user, setUser] = useState({})
 
   function validateForm() {
     let temp = {
@@ -47,7 +46,6 @@ export const Login = () => {
     return valido;
   }
 
-
   // Función para hacer POST de un nuevo usuario
   const newUser = async () => {
     const data = {
@@ -55,8 +53,6 @@ export const Login = () => {
       correo,
       password
     }
-
-    console.log(data)
 
     const result = await fetch(`${BACKEND_URL}/personas`, {
       method: 'POST',
@@ -66,15 +62,24 @@ export const Login = () => {
 
     if (result.ok) {
       console.log('Usuario creado')
-      navigate('/home')
+      return result.json()
+
     } else {
       console.log('Error al crear el usuario')
     }
   }
+
+  const usuario = async () => {
+    const result = await newUser()
+    setUser(result)
+    sessionStorage.setItem("token", result.id)
+    setactiveUser(result)
+  }
   
   const submit = () => {
     if (validateForm()) {
-      newUser()
+      usuario()
+      console.log('Formulario válido');
     } else {
       console.log('Formulario inválido')
     }
