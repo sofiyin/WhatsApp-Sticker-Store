@@ -7,15 +7,24 @@
     align-items: center;
 }
 
+.navbar a {
+    color: var(--textcolor);
+    text-decoration: none;
+}
+
 .navbar-logo {
-    width: 50px;
-    height: 50px;
-    background-color: var(--bgcolor-3);
-    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+}
+
+.navbar-logo img {
+    display: block;
+    max-width: 100%;
+
 }
 
 .navbar-button {
-    background-color: var(--bgcolor-3);
     width: 70px;
     height: 30px;
     padding: 10px;
@@ -39,9 +48,15 @@
 .navbar-search__icon {
     width: 30px;
     height: 30px;
-    background-color: var(--bgcolor-4);
+    background-color: var(--bgcolor-1);
     border-radius: 50%;
     margin-right: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--bgcolor-5);
 }
 
 .navbar-search__input {
@@ -57,9 +72,13 @@
 .navbar-carrito {
     width: 50px;
     height: 50px;
-    background-color: var(--bgcolor-3);
-    border-radius: 50%;
     margin: 0 10px;
+    font-size: 2em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--bgcolor-5);
 }
 
 .navbar-perfil {
@@ -67,6 +86,16 @@
     height: 50px;
     background-color: var(--bgcolor-3);
     border-radius: 50%;
+    font-size: 1.8em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--bgcolor-5);
+}
+
+.active {
+    background-color: var(--bgcolor-3);
 }
 
 @media (max-width: 1400px) {

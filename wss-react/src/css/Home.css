@@ -4,7 +4,7 @@
     height: 1500px;
 }
 
-img {
+.main img {
     display: block;
     max-width: 100%;
     margin-bottom: .5em;
@@ -12,7 +12,7 @@ img {
     transition: opacity 0.2s ease;
 }
 
-img:hover {
+.main img:hover {
     opacity: 0.6;
     cursor: pointer;
 }

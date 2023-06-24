@@ -1,4 +1,8 @@
-from init import *
+from index import *
+from flask import Flask, request
+from flask_cors import CORS 
+
+CORS(app)
 
 @app.route('/personas',methods=['GET', 'POST'])
 def route_personas():
@@ -8,7 +12,7 @@ def route_personas():
     
     elif request.method == 'POST':
         data = request.get_json()
-        persona = PERSONA(id=data["id"], correo=data["correo"],username=data["username"], password=data["password"])
+        persona = PERSONA(username=data["username"], correo=data["correo"], password=data["password"])
         db.session.add(persona)
         db.session.commit()
         return 'SUCCESS'
@@ -171,5 +175,5 @@ def registercreador():
 #@app.route('/comentario/<sticker_id>', methods = ['PUT', 'DELETE'])
 
 if __name__ == '__main__':
-    #app.run(debug=True, port=5000, host='192.168.18.14')
-    app.run()
+    app.run(debug=True, port=5000, host='0.0.0.0')
+    # app.run()

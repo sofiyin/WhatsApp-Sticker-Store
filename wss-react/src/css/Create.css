@@ -1,0 +1,125 @@
+.create-container {
+  height: 85vh;
+  display: grid;
+  grid-template-columns: 1fr 30px 1fr;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 30px 0 30px;
+}
+
+.create-mystickers {
+  background-color: var(--bgcolor-2);
+  height: 90%;
+  border-radius: 30px;
+  padding: 20px 40px; 
+}
+
+.create-mystickers__title {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.create-mystickers__gallery {
+  columns: 3 100px;
+  column-gap: 0.5em;
+}
+
+.create-mystickers__gallery img {
+  display: block;
+  max-width: 100%;
+  margin-bottom: .5em;
+  border-radius: 10px;
+  transition: opacity 0.2s ease;
+}
+
+.create-mystickers__gallery img:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.create-sticker {
+  background-color: var(--bgcolor-2);
+  height: 90%;
+  border-radius: 30px;
+  padding: 20px 60px;
+}
+
+.create-sticker__title {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.create-sticker__form {
+  width: 100%;
+  height: 520px;
+}
+
+.create-sticker__form label {
+  display: block;
+  font-size: .9em;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+.create-sticker__form input {
+  display: block;
+  width: 96%;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--bgcolor-1);
+  color: var(--textcolor);
+  font-size: 1em;
+}
+
+.create-sticker__form textarea {
+  display: block;
+  width: 96% !important;
+  resize: none;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--bgcolor-1);
+  color: var(--textcolor);
+  font-size: 1em;
+  font-family: 'Segoe UI';
+}
+
+.create-sticker__form textarea:first-of-type {
+  height: 130px !important;
+}
+
+.create-sticker__form textarea:nth-of-type(2) {
+  height: 80px !important;
+}
+
+.text-count {
+  text-align: end;
+  margin-right: 10px;
+  font-size: 0.8em;
+  color: var(--bgcolor-5);
+  margin-bottom: 10px;
+}
+
+.create-sticker__submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-sticker__submit div {
+  background-color: var(--bgcolor-3);
+  padding: 15px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.create-sticker__submit a {
+  color: var(--textcolor);
+  text-decoration: none;
+}
