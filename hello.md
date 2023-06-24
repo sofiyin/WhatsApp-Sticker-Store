@@ -9,7 +9,7 @@
     + **GET<id>** para identificar el carrito de un usuario activo
 
 3. Para la tabla `CARRITO` / `PERTENECE`:
-    + **GET** para descargar todos los stickers del carrito
+    + **GET** para descar@gar todos los stickers del carrito
     + **POST** para añadir un sticker al carrito
     + **DELETE** para eliminar un sticker del carrito
 4. Para la tabla `STICKER`: (melanie)
@@ -20,10 +20,9 @@
     + **PUT<id>** para actualizar un sticker de un solo creador
     + **DELETE<id>** para eliminar un sticker
 5. Para la tabla `COMENTARIO`: (melanie)
-    + **GET<id>** para mostrar los comentarios de un sticker
-    + **POST** para crear un nuevo comentario
-    + **DELETE** para eliminar todos los comentarios de un solo creador al borrar la cuenta
-    + **GET<id>** para mostrar los comentarios de un solo creador
-    + **PUT<id>** para actualizar un comentario de un solo creador
+    + **GET<sticker_id>** para mostrar los comentarios de un sticker
+    + **POST<sticker_id>** para crear un nuevo comentario para un sticker
+    + **DELETE<sticker_id>** para eliminar todos los comentarios de un sticker
+    + **PUT<id>** para editar un comentario
     + **DELETE<id>** para eliminar un comentario
 

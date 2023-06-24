@@ -1,17 +1,17 @@
 from dataclasses import dataclass
 import datetime
-from sqlalchemy import create_engine, ForeignKey, UniqueConstraint
+from sqlalchemy import select, and_, or_, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import sessionmaker, relationship
-from flask import Flask, jsonify, request, render_template
+from sqlalchemy.sql import func
+from flask import Flask, jsonify,  request, render_template,session,redirect
 from flask_sqlalchemy import SQLAlchemy
 import json
-
 app = Flask(__name__)
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY<@_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -24,7 +24,7 @@ class PERSONA(db.Model):
     username: str
     password: str
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     correo = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
@@ -54,10 +54,13 @@ class CREADOR(db.Model):
 
     seguidores: int
 
-    seguidores = db.Column(db.Integer, nullable=False)
+    seguidores = db.Column(db.Integer, default=0)
 
     creador_id = db.Column(db.Integer,db.ForeignKey('PERSONA.id'), primary_key=True)
     
+    # CREADORusername = db.Column(db.String, db.ForeignKey('PERSONA.username'))
+    # rusername_persona = relationship("PERSONA", backref="CREADOR")
+
     persona = relationship("PERSONA", backref="CREADOR")
 
     def __repr__(self):
@@ -75,7 +78,7 @@ class STICKER(db.Model):
     Foto:str
     FechaSubida:str
 
-    idsticker = db.Column(db.Integer, primary_key=True)
+    idsticker = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.String(100), nullable=False)
     categoria = db.Column(db.String(100), nullable=False)
@@ -95,7 +98,7 @@ class CARRITO(db.Model):
 
     idcarrito:int
 
-    idcarrito = db.Column(db.Integer, primary_key=True)
+    idcarrito = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     CAR_USUARIO_id = db.Column(db.Integer, db.ForeignKey('USUARIO.usuario_id'), primary_key=True)
     rcarritoo_usuario = relationship("USUARIO", backref="CARRITO")
@@ -111,7 +114,7 @@ class COMENTARIO(db.Model):
     COM_STICKER_id: int
     texto: str
 
-    idcomentario = db.Column(db.Integer, primary_key=True)
+    idcomentario = db.Column(db.Integer, primary_key=True, autoincrement=True)
     texto = db.Column(db.String(100), nullable=False)
 
     COM_STICKER_id = db.Column(db.Integer, db.ForeignKey('STICKER.idsticker'), primary_key=True)
@@ -155,7 +158,21 @@ class PERTENECE(db.Model):
     r_sticker_pertenece = relationship("STICKER", backref="PERTENECE")
     r_carrito_pertenece = relationship("CARRITO", backref="PERTENECE")
 
-    
+
+def insert_usuario(data):
+    usuario = USUARIO(username=data["username"], password=data["password"])
+    db.session.add(usuario)
+    db.session.commit()
+    return "SUCCESS"
+
+def insert_creador(data):
+    creador = USUARIO(username=data["username"], password=data["password"])
+    db.session.add(creador)
+    db.session.commit()
+    return "SUCCESS"
+
+
+
 with app.app_context():
         db.create_all()
 
