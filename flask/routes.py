@@ -108,6 +108,12 @@ def route_stickers():
         db.session.commit()
         return 'SUCCESS'
 
+@app.route('/stickers/<idsticker>', methods=['GET'])
+def route_stickers_id(idsticker):
+    if request.method == 'GET':
+        stickersid = STICKER.query.filter_by(idsticker=idsticker)
+        return jsonify(stickersid)
+
 @app.route('/stickers-creador/<creador_id>', methods = ['GET', 'POST', 'DELETE'])
 def route_stickers_creador_id(creador_id):
     if request.method=='GET':
