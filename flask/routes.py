@@ -165,7 +165,21 @@ def registercreador():
             return render_template('register.html', error_message=error_message)
 
        
-
+@app.route('/login', methods=['GET'])
+def login():
+    if request.method == 'GET':
+        data = request.get_json()
+        username = data['username']
+        password = data['password']
+        persona = PERSONA.query.filter_by(username=username).first()
+        if persona is None:
+            return 'No existe este nombre de usuario.'
+            return render_template('login.html', error_message=error_message)
+        else:
+            if persona.password == password:
+                return 'SUCCESS'
+            else:
+                return 'Contraseña incorrecta.'
         
 
 #@app.route('/stickers/<sticker_id>', methods = ['GET', 'PUT', 'DELETE'])
