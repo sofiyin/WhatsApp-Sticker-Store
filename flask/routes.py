@@ -111,7 +111,7 @@ def route_stickers():
 @app.route('/stickers/<idsticker>', methods=['GET'])
 def route_stickers_id(idsticker):
     if request.method == 'GET':
-        stickersid = STICKER.query.filter_by(idsticker=idsticker)
+        stickersid = STICKER.query.filter_by(idsticker=idsticker).first()
         return jsonify(stickersid)
 
 @app.route('/stickers-creador/<creador_id>', methods = ['GET', 'POST', 'DELETE'])
@@ -195,5 +195,5 @@ def login():
 #@app.route('/comentario/<sticker_id>', methods = ['PUT', 'DELETE'])
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000, host='0.0.0.0')
+    app.run(debug=True, port=5001, host='0.0.0.0')
     # app.run()

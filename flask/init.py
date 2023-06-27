@@ -8,8 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Micontra123@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
 
 app.config['SQLALCHEMY<@_TRACK_MODIFICATIONS'] = False
 
@@ -177,5 +177,5 @@ with app.app_context():
         db.create_all()
 
 if __name__ == '__main__':
-    #app.run(debug=True, port=5000, host='192.168.18.14')
-    app.run()
+    app.run(debug=True, port=5001, host='0.0.0.0')
+    #app.run()
