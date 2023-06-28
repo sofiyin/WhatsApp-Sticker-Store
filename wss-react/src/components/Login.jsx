@@ -54,14 +54,14 @@ export const Login = ({setactiveUser}) => {
       password
     }
 
-    const result = await fetch(`${BACKEND_URL}/personas`, {
+    const result = await fetch(`${BACKEND_URL}/register-user`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (result.ok) {
-      console.log('Usuario creado')
+      console.log(result);
       return result.json()
 
     } else {
