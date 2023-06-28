@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import "../css/Login.css"
 
-const BACKEND_URL = 'http://localhost:5000'
+const BACKEND_URL = 'http://localhost:5001'
 
 export const Login = ({setactiveUser}) => {
   const [username, setUsername] = useState('')
@@ -54,7 +54,7 @@ export const Login = ({setactiveUser}) => {
       password
     }
 
-    const result = await fetch(`${BACKEND_URL}/personas`, {
+    const result = await fetch(`${BACKEND_URL}/register-user`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }
