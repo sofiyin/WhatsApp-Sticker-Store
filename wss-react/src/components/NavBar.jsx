@@ -9,9 +9,10 @@ export const NavBar = () => {
   const [showUserInfo, setshowUserInfo] = useState(false)
   const [activeButton, setActiveButton] = useState('inicio')
   const location = useLocation()
+  const token = sessionStorage.getItem('token')
 
   useEffect(() => {
-    location.pathname === '/home' ? setActiveButton('inicio') : setActiveButton('crear')
+    location.pathname === `/home/${token}` ? setActiveButton('inicio') : setActiveButton('crear')
   })
 
   return (
@@ -19,11 +20,11 @@ export const NavBar = () => {
       <div className="navbar-logo">
         <img src={process.env.PUBLIC_URL + 'http://localhost:3000/assets/Logo_wss-t.png'} alt="Logo wss" />
       </div>
-      <Link to='/home'><div
+      <Link to={`/home/${token}`}><div
         className={`navbar-button ${activeButton === 'inicio' ? 'active' : ''}`}
         onClick={() => setActiveButton('inicio')} 
       > Inicio </div> </Link>
-      <Link to='/create'><div 
+      <Link to={`/create/${token}`}><div 
         className={`navbar-button ${activeButton === 'crear' ? 'active' : ''}`}
         onClick={() => setActiveButton('crear')}
       > Crear </div></Link>
