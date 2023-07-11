@@ -32,7 +32,7 @@ function App() {
 					}
 
 					<Route path='/home/:id' element={<Home />} />	
-					<Route path='/create' element={<Create />} />
+					<Route path='/create/:id' element={<Create />} />
 					<Route path='*' element={<h1> Page not found :C </h1>} />
 				</Routes>
 			</Router>

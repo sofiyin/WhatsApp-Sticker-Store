@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { StickersInfo } from './StickersInfo'
 import { NavBar } from './NavBar'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import '../css/Home.css'
 
 const BACKEND_URL = 'http://localhost:5001'
@@ -9,8 +9,11 @@ const BACKEND_URL = 'http://localhost:5001'
 export const Home = () => {
   const [showSticker, setshowSticker] = useState(false)
   const [users, setUsers] = useState([])
+  const location = useLocation()
   const Params = useParams()
-  console.log(Params.id)
+  const token = sessionStorage.getItem('token')
+  const idparam = Params.id
+
 
   const mostrarSticker = () => {
     setshowSticker(!showSticker)
@@ -30,6 +33,7 @@ export const Home = () => {
   }
 
   useEffect (() => {
+    // idparam !== token ? location.pathname === `/home/${token}` : ''
     usuarios()
 
     return () => {

@@ -61,7 +61,7 @@ export const Login = ({setactiveUser}) => {
     })
 
     if (result.ok) {
-      console.log('Usuario creado')
+      console.log(result);
       return result.json()
 
     } else {

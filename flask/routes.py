@@ -15,7 +15,7 @@ def route_personas():
         persona = PERSONA(username=data["username"], correo=data["correo"], password=data["password"])
         db.session.add(persona)
         db.session.commit()
-        return 'SUCCESS'
+        return jsonify(persona)
     
 @app.route('/personas/<personas_id>', methods=['GET', 'PUT', 'DELETE'])
 def route_personas_id(personas_id):
@@ -160,7 +160,8 @@ def registeruser():
             db.session.commit()
             return jsonify(new_persona)
         except:
-            return 'Ya existe este nombre de usuario.'
+            error_message = 'Ya existe este nombre de usuario.'
+            return error_message
 
 @app.route('/register-creador', methods=['GET', 'POST'])
 def registercreador():
