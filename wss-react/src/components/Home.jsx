@@ -4,7 +4,7 @@ import { NavBar } from './NavBar'
 import { useLocation, useParams } from 'react-router-dom'
 import '../css/Home.css'
 
-const BACKEND_URL = 'http://localhost:5000'
+const BACKEND_URL = 'http://localhost:5001'
 
 export const Home = () => {
   const [showSticker, setshowSticker] = useState(false)
@@ -21,7 +21,7 @@ export const Home = () => {
 
   // Función asíncrona para hacer fetch a flask:
   const fetchStickers = async () => {
-    const result = await fetch(`${BACKEND_URL}/personas`)
+    const result = await fetch(`${BACKEND_URL}/usuarios`)
     const body = await result.json()
     
     return body
