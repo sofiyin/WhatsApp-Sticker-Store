@@ -5,14 +5,17 @@ import { useParams } from 'react-router-dom'
 import { fetchStickers } from '../service/api'
 import '../css/Home.css'
 
-const Sticker = ({url, name, mostrarSticker}) => {
+const Sticker = ({id, url, name, mostrarSticker}) => {
 
   return (
-      <img 
-        src={url} 
-        alt={name} 
-        onClick={ mostrarSticker }  
-      />
+    
+    <img 
+      id = {id}
+      src={url} 
+      alt={name} 
+      onClick={ mostrarSticker }  
+    />
+
   )
 }
 
@@ -29,11 +32,17 @@ export const Home = () => {
   }
 
   useEffect (() => {
-    return async () => {
+    const callFetchStickers = async () => {
       const response = await fetchStickers()
-      setStickers(response)
+      setStickers(response || [])
     }
-  }, [])
+
+    callFetchStickers()
+
+    return () => {
+    }
+
+  }, []) 
 
   return (
     <>
@@ -45,9 +54,15 @@ export const Home = () => {
           alt="Michi_9" 
           />
 
-          { stickers.map((sticker) => (
-            <Sticker url={sticker.Foto} name={sticker.nombre} mostrarSticker={mostrarSticker} />
+          { stickers?.map((sticker) => (
+            <Sticker 
+              key = {sticker.idsticker} 
+              id = {sticker.idsticker} 
+              url = {sticker.Foto} 
+              name = {sticker.nombre} 
+              mostrarSticker={mostrarSticker} />
           ))}
+
 
         </div>
         { showSticker && <StickersInfo mostrarSticker={mostrarSticker}/> }

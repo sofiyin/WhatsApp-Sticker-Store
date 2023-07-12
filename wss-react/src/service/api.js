@@ -12,6 +12,7 @@ export const fetchStickers = async () => {
     return undefined;
   }
 
+	console.log(response);
   return response.json();
 }
 
@@ -40,6 +41,18 @@ export const loginUser = async (body) => {
 
 	if (!response.ok) {
 		console.log('Error al iniciar sesión')
+		return undefined
+	}
+
+	console.log(response)
+	return response.json()
+}
+
+export const getUser = async (id) => {
+	const response = await fetch(`${BACKEND_URL}/personas/${id}`)
+
+	if (!response.ok) {
+		console.log('Error al obtener el usuario')
 		return undefined
 	}
 

@@ -1,10 +1,24 @@
 .main-user {
   background-color: var(--bgcolor-2);
-  width: 200px;
   border-radius: 10px;
   padding: 10px;
   position: absolute;
   right: 20px;
   top: 70px;
   z-index: 2;
+}
+
+.main-user hr {
+  margin: 10px 0;
+}
+
+.main-user__button {
+  background-color: var(--bgcolor-1);
+  border: none;
+  border-radius: 5px;
+  color: var(--color-1);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 5px 10px;
 }
