@@ -61,13 +61,14 @@ export const Login = ({setactiveUser}) => {
   }
   
   const submit = () => {
-    if (!validateForm()) {
+    if (!validateForm() && loggeo) {
       console.log('Formulario inválido')
       return undefined
     }
 
     if (loggeo) {
       newUser()
+
       console.log('Formulario válido');
     } else {
 
