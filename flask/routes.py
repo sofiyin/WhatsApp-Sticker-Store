@@ -181,7 +181,7 @@ def registercreador():
             error_message = 'Ya existe este nombre de usuario.'
             return error_message
 
-       
+
 @app.route('/login', methods=['GET'])
 def login():
     if request.method == 'GET':
@@ -191,7 +191,6 @@ def login():
         persona = PERSONA.query.filter_by(username=username).first()
         if persona is None:
             return 'No existe este nombre de usuario.'
-            return render_template('login.html', error_message=error_message)
         else:
             if persona.password == password:
                 return jsonify(persona)

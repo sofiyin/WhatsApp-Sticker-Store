@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
+import { registerUser } from '../service/api'
 import "../css/Login.css"
-
-const BACKEND_URL = 'http://localhost:5001'
 
 export const Login = ({setactiveUser}) => {
   const [username, setUsername] = useState('')
@@ -48,40 +47,30 @@ export const Login = ({setactiveUser}) => {
 
   // Función para hacer POST de un nuevo usuario
   const newUser = async () => {
-    const data = {
-      username,
-      correo,
-      password
-    }
+    const response = await registerUser({username, correo, password})
+    setUser(response)
 
-    const result = await fetch(`${BACKEND_URL}/register-user`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
-    })
-
-    if (result.ok) {
-      console.log('Usuario creado')
-      return result.json()
-
-    } else {
-      console.log('Error al crear el usuario')
-    }
+    sessionStorage.setItem("userId_local", response.id)
+    setactiveUser(response)
   }
-
-  const usuario = async () => {
-    const result = await newUser()
-    setUser(result)
-    sessionStorage.setItem("token", result.id)
-    setactiveUser(result)
+  
+  const loginUser = async () => {
+    const response = await loginUser({username, password})
+    setUser(response)
+    setactiveUser(response)
   }
   
   const submit = () => {
-    if (validateForm()) {
-      usuario()
+    if (!validateForm()) {
+      console.log('Formulario inválido')
+      return undefined
+    }
+
+    if (loggeo) {
+      newUser()
       console.log('Formulario válido');
     } else {
-      console.log('Formulario inválido')
+
     }
   }
 

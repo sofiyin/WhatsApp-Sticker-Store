@@ -12,13 +12,13 @@ import './css/App.css';
 function App() {
 
 	const [activeUser, setactiveUser] = useState(0)	
-	const token = sessionStorage.getItem('token')
+	const userId = sessionStorage.getItem('userId_local')
 
 	useEffect(() => {
-		if (token && token !== 'undefined' && token !== 'null'){
-			setactiveUser(token)
+		if (userId && userId !== 'undefined' && userId !== 'null'){
+			setactiveUser(userId)
 		}
-	}, [token])
+	}, [userId])
 
 	return (
 		<>
@@ -28,7 +28,7 @@ function App() {
 						activeUser === 0 ?
 							<Route path='/' element={<Login setactiveUser={setactiveUser}/>} />
 						:
-							<Route path='/' element={<Navigate to={`/home/${token}`} />} />
+							<Route path='/' element={<Navigate to={`/home/${userId}`} />} />
 					}
 
 					<Route path='/home/:id' element={<Home />} />	

@@ -1,0 +1,1 @@
+export const userId_local = null;
