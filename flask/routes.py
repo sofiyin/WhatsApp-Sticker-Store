@@ -116,33 +116,56 @@ def route_stickers_id(idsticker):
 
 @app.route('/stickers-creador/<creador_id>', methods = ['GET', 'POST', 'DELETE'])
 def route_stickers_creador_id(creador_id):
-    if request.method=='GET':
-        key = 'getStickers'
-        if key not in cache.keys():
-            dbResponse = STICKER.query.filter_by(S_CREADOR_id=creador_id).all()
-            cache[key] = dbResponse;
-            print("From DB")
-        else:
-            print("From Cache")
-    
-        stickers = cache[key];
-        response = ""
-        for sticker in stickers:
-            response += sticker.nombre+";"+sticker.descripcion+";"+sticker.categoria+";"+sticker.likes+";"+sticker.Foto+";"+sticker.FechaSubida
-        return jsonify(response)
+    if request.method == 'GET':
+        stickers = STICKER.query.filter_by(S_CREADOR_id=creador_id).all()
+        return jsonify(stickers)
 
     elif request.method == 'POST':
         data = request.get_json()
-        sticker = STICKER(nombre=data["nombre"],descripcion=data["descripcion"], categoria=data["categoria"], likes = 0, Foto=data["Foto"], FechaSubida=func.now(), S_CREADOR_id = creador_id)
+        sticker = STICKER(
+            nombre=data["nombre"],
+            descripcion=data["descripcion"], 
+            categoria=data["categoria"], 
+            likes = 0, 
+            Foto = data["Foto"], 
+            FechaSubida=func.now(), 
+            S_CREADOR_id = creador_id
+        )
         db.session.add(sticker)
         db.session.commit()
-        return 'SUCCESS'
-    elif request.method == 'DELETE':
-        filas = STICKER.query.filter_by(S_CREADOR_id=creador_id).all()
-        for fila in filas:
-            db.session.delete(fila)
-        db.commit()
-        return 'SUCCESS'
+        return jsonify(sticker)
+
+
+# def route_stickers_creador_id(creador_id):
+#     cache = {}
+
+#     if request.method=='GET':
+#         key = 'getStickers'
+#         if key not in cache.keys():
+#             dbResponse = STICKER.query.filter_by(S_CREADOR_id=creador_id).all()
+#             cache[key] = dbResponse;
+#             print("From DB")
+#         else:
+#             print("From Cache")
+    
+#         stickers = cache[key];
+#         response = ""
+#         for sticker in stickers:
+#             response += sticker.nombre+";"+sticker.descripcion+";"+sticker.categoria+";"+sticker.likes+";"+sticker.Foto+";"+sticker.FechaSubida
+#         return jsonify(response)
+
+#     elif request.method == 'POST':
+#         data = request.get_json()
+#         sticker = STICKER(nombre=data["nombre"],descripcion=data["descripcion"], categoria=data["categoria"], likes = 0, Foto=data["Foto"], FechaSubida=func.now(), S_CREADOR_id = creador_id)
+#         db.session.add(sticker)
+#         db.session.commit()
+#         return 'SUCCESS'
+#     elif request.method == 'DELETE':
+#         filas = STICKER.query.filter_by(S_CREADOR_id=creador_id).all()
+#         for fila in filas:
+#             db.session.delete(fila)
+#         db.commit()
+#         return 'SUCCESS'
 
 @app.route('/register-user', methods=['GET', 'POST'])
 def registeruser():

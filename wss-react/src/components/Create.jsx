@@ -1,20 +1,66 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavBar } from './NavBar'
-import { Link } from 'react-router-dom'
+import { userSticker, postSticker } from '../service/api'
 import '../css/Create.css'
 
-export const Create = () => {
+const userId = sessionStorage.getItem('userId_local')
 
+const Sticker = ({id, url, name}) => {
+  return (
+    <img 
+      id = {id}
+      src={url} 
+      alt={name} 
+    />
+  )
+}
+
+export const Create = () => {
   const [tamTitulo, setTamTitulo] = useState(0)
   const [tamDescrip, setTamDescrip] = useState(0)
+  const [stickers, setStickers] = useState([])
+  const [titulo, setTitulo] = useState('')
+  const [descripcion, setDescripcion] = useState('')
+  const [url, setUrl] = useState('')
 
-  const contarTitulo = (e) => {
+  const handleTitulo = (e) => {
     setTamTitulo(e.target.value.length)
+    setTitulo(e.target.value)
   }
 
-  const contarDescrip = (e) => {
+  const handleDescripcion = (e) => {
     setTamDescrip(e.target.value.length)
+    setDescripcion(e.target.value)
   }
+
+  const handleUrl = (e) => {
+    setUrl(e.target.value)
+  }
+
+  const uploadSticker = async () => {
+    let body = {
+      nombre: titulo,
+      descripcion: descripcion,
+      categoria: "",
+      likes: 0,
+      Foto: url,
+      FechaSubida: new Date(),
+      idusuario: userId
+    }
+
+    postSticker(body)
+    
+    userStickers()
+  }
+
+  const userStickers = async () => {
+    const response = await userSticker(userId)
+    setStickers(response || [])
+  }
+
+  useEffect (() => {
+    userStickers()
+  } , [])
 
   return (
     <>
@@ -24,11 +70,15 @@ export const Create = () => {
           <div className="create-mystickers__title">Mis stickers</div>
           <div className="create-mystickers__gallery">
             <div className="create-mystickers__gallery-content">
-              <img src="https://images.pexels.com/photos/3777622/pexels-photo-3777622.jpeg" alt="Michi_1" /> 
-              <img src="https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Michi_2" />
-              <img src="https://images.pexels.com/photos/2173872/pexels-photo-2173872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Michi_3" />
-              <img src="https://images.pexels.com/photos/384555/pexels-photo-384555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Michi_4" />
-              <img src="https://images.pexels.com/photos/2361952/pexels-photo-2361952.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Michi_5" />
+              { 
+                stickers?.map((sticker) => (
+                  <Sticker 
+                    key = {sticker.idsticker} 
+                    id = {sticker.idsticker} 
+                    url = {sticker.Foto} 
+                    name = {sticker.nombre} 
+                  />
+              ))}
             </div>
           </div>
         </div>
@@ -40,14 +90,14 @@ export const Create = () => {
             <input 
               type="text"
               id="titulo_sticker"
-              onChange={ contarTitulo }
+              onChange={ handleTitulo }
               placeholder="Titulo de tu Sticker" />
             <div className="text-count"> {tamTitulo}/50 </div>
 
             <label htmlFor="descripcion_sticker">Descripción</label>
             <textarea 
               id = "description_sticker"
-              onChange={ contarDescrip }
+              onChange={ handleDescripcion }
               placeholder="Descripcion de tu sticker" />
             <div className="text-count"> {tamDescrip}/200 </div>
 
@@ -55,9 +105,10 @@ export const Create = () => {
             <textarea 
               type="text"
               id="url_sticker"
+              onChange={ handleUrl }
               placeholder="Ingresa la url de tu sticker" />
             <div className="create-sticker__submit">
-              <div> <Link to='/home'> Subir </Link> </div>
+              <div onClick={ uploadSticker }> Subir </div>
             </div>
           </div>
         </div>

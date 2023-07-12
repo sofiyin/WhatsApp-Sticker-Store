@@ -28,7 +28,6 @@ export const registerUser = async (body) => {
 		return undefined
 	}
 
-	console.log(response)
 	return response.json()
 }
 
@@ -44,7 +43,6 @@ export const loginUser = async (body) => {
 		return undefined
 	}
 
-	console.log(response)
 	return response.json()
 }
 
@@ -56,6 +54,31 @@ export const getUser = async (id) => {
 		return undefined
 	}
 
-	console.log(response)
+	return response.json()
+}
+
+export const userSticker = async (id) => {
+	const response = await fetch(`${BACKEND_URL}/stickers-creador/${id}`)
+
+	if (!response.ok) {
+		console.log('Error al obtener los stickers del usuario')
+		return undefined
+	}
+
+	return response.json()
+}
+
+export const postSticker = async (body) => {
+	const response = await fetch(`${BACKEND_URL}/stickers-creador/${body.idusuario}`, {
+		method: 'POST',
+		body: JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json' }
+	})
+
+	if (!response.ok) {
+		console.log('Error al crear el sticker')
+		return undefined
+	}
+
 	return response.json()
 }
