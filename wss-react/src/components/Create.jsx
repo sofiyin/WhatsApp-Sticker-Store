@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavBar } from './NavBar'
 import { userSticker, postSticker } from '../service/api'
+import { useParams } from 'react-router-dom'
 import '../css/Create.css'
 
 const userId = sessionStorage.getItem('userId_local')
@@ -9,8 +10,8 @@ const Sticker = ({id, url, name}) => {
   return (
     <img 
       id = {id}
-      src={url} 
-      alt={name} 
+      src = {url} 
+      alt = {name} 
     />
   )
 }
@@ -22,6 +23,7 @@ export const Create = () => {
   const [titulo, setTitulo] = useState('')
   const [descripcion, setDescripcion] = useState('')
   const [url, setUrl] = useState('')
+  const Params = useParams()
 
   const handleTitulo = (e) => {
     setTamTitulo(e.target.value.length)
@@ -45,7 +47,7 @@ export const Create = () => {
       likes: 0,
       Foto: url,
       FechaSubida: new Date(),
-      idusuario: userId
+      idusuario: Params.id
     }
 
     postSticker(body)
@@ -54,7 +56,7 @@ export const Create = () => {
   }
 
   const userStickers = async () => {
-    const response = await userSticker(userId)
+    const response = await userSticker(Params.id)
     setStickers(response || [])
   }
 

@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import '../css/StickersInfo.css'
 
-export const StickersInfo = ({mostrarSticker}) => {
+export const StickersInfo = ({mostrarSticker, idImage}) => {
+
+	console.log(idImage);
 
 	return (
 		<div className="transparent">
@@ -12,10 +14,14 @@ export const StickersInfo = ({mostrarSticker}) => {
 					<div className="back" onClick={mostrarSticker}><FontAwesomeIcon icon={faCircleXmark} /></div>
 				</div>
 				<div className="stickerInfo-maincontent">
-					<div className="stickerInfo-carrito"><FontAwesomeIcon icon={faCartShopping} /></div>
+					<div className="stickerInfo-carrito">
+						<FontAwesomeIcon icon={faCartShopping} />
+					</div>
 					<div className="stickerInfo-content">
 						<div className="stickerInfo__title"> Title </div>
-						<div className="stickerInfo__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem repellat incidunt, ea maxime sit est iusto beatae? Voluptas consectetur </div>
+						<div className="stickerInfo__description">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem repellat incidunt, ea maxime sit est iusto beatae? Voluptas consectetur 
+						</div>
 						<div className="stickerInfo__date"> 13-06-2023 </div>
 						<div className="stickerInfo__about">
 							<div className="about-category"> Category Pro </div>

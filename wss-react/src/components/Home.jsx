@@ -11,9 +11,9 @@ const Sticker = ({id, url, name, mostrarSticker}) => {
     
     <img 
       id = {id}
-      src={url} 
-      alt={name} 
-      onClick={ mostrarSticker }  
+      src = {url} 
+      alt = {name} 
+      onClick={ () => mostrarSticker(id) }  
     />
 
   )
@@ -23,12 +23,13 @@ const Sticker = ({id, url, name, mostrarSticker}) => {
 export const Home = () => {
   const [showSticker, setshowSticker] = useState(false)
   const [stickers, setStickers] = useState([])
+  const [idImagen, setIdImagen] = useState(0)
   const Params = useParams()
 
-  console.log(stickers);
-
-  const mostrarSticker = () => {
+  const mostrarSticker = (id) => {
     setshowSticker(!showSticker)
+
+    setIdImagen(id)
   }
 
   useEffect (() => {
@@ -60,12 +61,12 @@ export const Home = () => {
               id = {sticker.idsticker} 
               url = {sticker.Foto} 
               name = {sticker.nombre} 
-              mostrarSticker={mostrarSticker} />
+              mostrarSticker={ mostrarSticker } />
           ))}
 
 
         </div>
-        { showSticker && <StickersInfo mostrarSticker={mostrarSticker}/> }
+        { showSticker && <StickersInfo mostrarSticker = { mostrarSticker } idImage = { idImagen } /> }
       </main>
     </>
   )
