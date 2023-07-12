@@ -33,7 +33,7 @@ export const registerUser = async (body) => {
 
 export const loginUser = async (body) => {
 	const response = await fetch(`${BACKEND_URL}/login`, {
-		method: 'GET',
+		method: 'POST',
 		body: JSON.stringify(body),
 		headers: { 'Content-Type': 'application/json' }
 	})

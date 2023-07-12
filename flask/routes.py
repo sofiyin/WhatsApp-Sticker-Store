@@ -183,9 +183,9 @@ def registercreador():
             return error_message
 
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'GET':
+    if request.method == 'POST':
         data = request.get_json()
         username = data['username']
         password = data['password']

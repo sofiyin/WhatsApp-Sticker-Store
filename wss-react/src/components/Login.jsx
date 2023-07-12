@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { registerUser } from '../service/api'
+import { registerUser, loginUser } from '../service/api'
 import "../css/Login.css"
 
 export const Login = ({setactiveUser}) => {
@@ -25,12 +25,6 @@ export const Login = ({setactiveUser}) => {
       valido = false
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(correo)) {
-      temp.correo = "Ingresa un correo válido"
-      valido = false
-    }
-
     if (password === "") {
       temp.password = "Ingresa una contraseña"
       valido = false
@@ -38,6 +32,14 @@ export const Login = ({setactiveUser}) => {
     } else if (password.length < 6) {
       temp.password = "La contraseña debe tener al menos 6 caracteres"
       valido = false
+    }
+
+    if (loggeo) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(correo)) {
+        temp.correo = "Ingresa un correo válido"
+        valido = false
+      }
     }
     
     setErrors(temp)
@@ -54,14 +56,17 @@ export const Login = ({setactiveUser}) => {
     setactiveUser(response)
   }
   
-  const loginUser = async () => {
+  // Función para hacer GET y logearse
+  const login = async () => {
     const response = await loginUser({username, password})
     setUser(response)
+
+    sessionStorage.setItem("userId_local", response.id)
     setactiveUser(response)
   }
   
   const submit = () => {
-    if (!validateForm() && loggeo) {
+    if (!validateForm()) {
       console.log('Formulario inválido')
       return undefined
     }
@@ -69,9 +74,11 @@ export const Login = ({setactiveUser}) => {
     if (loggeo) {
       newUser()
 
-      console.log('Formulario válido');
+      console.log('Nuevo usuario');
     } else {
+      login()
 
+      console.log('Iniciando sesión');
     }
   }
 
