@@ -52,7 +52,7 @@ export const Create = () => {
 
     postSticker(body)
     
-    userStickers()
+    window.location.reload()
   }
 
   const userStickers = async () => {
