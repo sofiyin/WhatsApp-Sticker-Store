@@ -48,7 +48,7 @@ export const StickersInfo = ({mostrarSticker, idImage}) => {
 						<div className="stickerInfo__description">
 							{sticker.descripcion}
 						</div>
-						<div className="stickerInfo__date"> {sticker.FechaSubida } </div>
+						<div className="stickerInfo__date"> {sticker.FechaSubida?.substring(0, 11) } </div>
 						<div className="stickerInfo__about">
 							<div className="about-category"> Category Pro </div>
 							<div className="about-likes">

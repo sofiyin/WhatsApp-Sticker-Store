@@ -285,11 +285,17 @@ def route_stickers():
         db.session.commit()
         return 'SUCCESS'
 
-@app.route('/stickers/<idsticker>', methods=['GET'])
+@app.route('/stickers/<idsticker>', methods=['GET', 'DELETE'])
 def route_stickers_id(idsticker):
     if request.method == 'GET':
         stickersid = STICKER.query.filter_by(idsticker=idsticker).first()
         return jsonify(stickersid)
+    
+    elif request.method == 'DELETE':
+        stickersid = STICKER.query.get_or_404(idsticker)
+        db.session.delete(stickersid)
+        db.session.commit()
+        return 'SUCCESS'
 
 @app.route('/stickers-creador/<creador_id>', methods = ['GET', 'POST', 'DELETE'])
 def route_stickers_creador_id(creador_id):
@@ -311,6 +317,7 @@ def route_stickers_creador_id(creador_id):
         db.session.add(sticker)
         db.session.commit()
         return jsonify(sticker)
+
 
 
 # def route_stickers_creador_id(creador_id):

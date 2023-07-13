@@ -4,7 +4,7 @@ const BACKEND_URL = 'http://127.0.0.1:5001'
 
 const userId = localStorage.getItem(userId_local)
 
-// Sstickers
+// Stickers
 
 export const fetchStickers = async () => {
 	const response = await fetch(`${BACKEND_URL}/stickers`)
@@ -14,12 +14,11 @@ export const fetchStickers = async () => {
     return undefined;
   }
 
-	console.log(response);
   return response.json();
 }
 
 export const postSticker = async (body) => {
-	const response = await fetch(`${BACKEND_URL}/stickers-creador/${body.idusuario}`, {
+	const response = await fetch(`${BACKEND_URL}/stickers-creador/${body.S_CREADOR_id}`, {
 		method: 'POST',
 		body: JSON.stringify(body),
 		headers: { 'Content-Type': 'application/json' }
@@ -42,6 +41,18 @@ export const stickerInfo = async (id) => {
 	}
 
 	return response.json()
+}
+
+export const deleteSticker = async (id) => {
+	const response = await fetch(`${BACKEND_URL}/stickers/${id}`, {
+		method: 'DELETE',
+		headers: { 'Content-Type': 'application/json' }
+	})
+
+	if (!response.ok) {
+		console.log('Error al eliminar el sticker')
+		return undefined
+	}
 }
 
 // Login and Register
