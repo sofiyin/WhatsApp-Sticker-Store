@@ -363,7 +363,7 @@ def registeruser():
             new_persona = PERSONA(correo=correo,username=username, password=password)
             db.session.add(new_persona)
             db.session.commit()
-            new_usuario = USUARIO(usuario_id = new_persona.id)
+            new_usuario = USUARIO(usuario_id =  new_persona.id)
             db.session.add(new_usuario)
             db.session.commit()
             new_creador = CREADOR(creador_id = new_persona.id)
