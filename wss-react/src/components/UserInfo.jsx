@@ -27,11 +27,19 @@ export const UserInfo = () => {
       <div>{user.username}</div>
       <div>{user.correo}</div>
       <hr />
+      <div
+        className='main-user__button'>
+        Editar Perfil
+      </div>
       <div 
         className='main-user__button'
-        onClick={ cerrarSesion }
-      > 
+        onClick={ cerrarSesion }> 
         Cerrar sesión
+      </div>
+      <hr />
+      <div
+        className='main-user__red'>
+        Eliminar cuenta
       </div>
     </div>
   )

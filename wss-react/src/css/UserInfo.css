@@ -10,6 +10,8 @@
 
 .main-user hr {
   margin: 10px 0;
+  border: none;
+  border-top: 1px solid var(--bgcolor-5);
 }
 
 .main-user__button {
@@ -21,4 +23,17 @@
   font-size: 1rem;
   font-weight: 600;
   padding: 5px 10px;
+  margin: 10px 0;
+}
+
+.main-user__red {
+  background-color: rgb(87, 5, 5);
+  border: none;
+  border-radius: 5px;
+  color: var(--color-1);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  margin: 10px 0;
 }

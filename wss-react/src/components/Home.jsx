@@ -27,9 +27,9 @@ export const Home = () => {
   const Params = useParams()
 
   const mostrarSticker = (id) => {
-    setshowSticker(!showSticker)
-
     setIdImagen(id)
+
+    setshowSticker(!showSticker)
   }
 
   useEffect (() => {
@@ -50,10 +50,6 @@ export const Home = () => {
       <NavBar />
       <main className="main">
         <div className="gallery">
-          <img onClick={ mostrarSticker }
-          src="https://images.pexels.com/photos/69932/tabby-cat-close-up-portrait-69932.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-          alt="Michi_9" 
-          />
 
           { stickers?.map((sticker) => (
             <Sticker 
@@ -63,7 +59,6 @@ export const Home = () => {
               name = {sticker.nombre} 
               mostrarSticker={ mostrarSticker } />
           ))}
-
 
         </div>
         { showSticker && <StickersInfo mostrarSticker = { mostrarSticker } idImage = { idImagen } /> }

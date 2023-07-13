@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.sql import func
 from flask import Flask, jsonify,  request, render_template,session,redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import json
 from flask_cors import CORS 
 app = Flask(__name__)
@@ -79,6 +80,7 @@ class STICKER(db.Model):
     likes: int
     Foto:str
     FechaSubida:str
+    S_CREADOR_id: int
     
 
     idsticker = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -173,6 +175,9 @@ def insert_creador(data):
     db.session.add(creador)
     db.session.commit()
     return "SUCCESS"
+
+with app.app_context():
+    db.create_all()
 
 
 CORS(app)
@@ -281,11 +286,17 @@ def route_stickers():
         db.session.commit()
         return 'SUCCESS'
 
-@app.route('/stickers/<idsticker>', methods=['GET'])
+@app.route('/stickers/<idsticker>', methods=['GET', 'DELETE'])
 def route_stickers_id(idsticker):
     if request.method == 'GET':
         stickersid = STICKER.query.filter_by(idsticker=idsticker).first()
         return jsonify(stickersid)
+    
+    elif request.method == 'DELETE':
+        stickersid = STICKER.query.get_or_404(idsticker)
+        db.session.delete(stickersid)
+        db.session.commit()
+        return 'SUCCESS'
 
 @app.route('/stickers-creador/<creador_id>', methods = ['GET', 'POST', 'DELETE'])
 def route_stickers_creador_id(creador_id):
@@ -307,6 +318,7 @@ def route_stickers_creador_id(creador_id):
         db.session.add(sticker)
         db.session.commit()
         return jsonify(sticker)
+
 
 
 # def route_stickers_creador_id(creador_id):
@@ -399,7 +411,8 @@ def login():
         
 
 
+with app.app_context():
+        db.create_all()
+
 if __name__ == '__main__':
-    db.create_all()
-    if 'liveconsole' not in gethostname():
-        app.run()
+    app.run()

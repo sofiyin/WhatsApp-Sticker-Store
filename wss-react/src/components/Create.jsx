@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { NavBar } from './NavBar'
-import { userSticker, postSticker } from '../service/api'
+import { userSticker, postSticker, deleteSticker } from '../service/api'
 import { useParams } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../css/Create.css'
 
 const userId = sessionStorage.getItem('userId_local')
 
 const Sticker = ({id, url, name}) => {
+  const dropSticker = async (id) => {
+    const image = document.getElementById(id)
+    image.style.display = 'none'
+    
+    await deleteSticker(id)
+  }
+
   return (
-    <img 
-      id = {id}
-      src = {url} 
-      alt = {name} 
-    />
+    <div className='img-item'>
+      <img 
+        id = {id}
+        src = {url} 
+        alt = {name} 
+      />
+      <div className="trash-icon" onClick = { () => dropSticker(id) } >
+        <FontAwesomeIcon icon={faTrash} />
+      </div>
+    </div>
   )
 }
 
@@ -47,7 +61,7 @@ export const Create = () => {
       likes: 0,
       Foto: url,
       FechaSubida: new Date(),
-      idusuario: Params.id
+      S_CREADOR_id: Params.id
     }
 
     postSticker(body)
@@ -63,6 +77,7 @@ export const Create = () => {
   useEffect (() => {
     userStickers()
   } , [])
+
 
   return (
     <>
