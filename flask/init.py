@@ -6,11 +6,12 @@ from sqlalchemy.sql import func
 from flask import Flask, jsonify,  request, render_template,session,redirect
 from flask_sqlalchemy import SQLAlchemy
 import json
+from flask_cors import CORS 
 app = Flask(__name__)
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost:5432/postgres'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost:5432/postgres'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:password@localhost:5432/proyecto'
 
 app.config['SQLALCHEMY<@_TRACK_MODIFICATIONS'] = False
 
@@ -398,8 +399,7 @@ def login():
         
 
 
-with app.app_context():
-        db.create_all()
-
 if __name__ == '__main__':
-    app.run()
+    db.create_all()
+    if 'liveconsole' not in gethostname():
+        app.run()

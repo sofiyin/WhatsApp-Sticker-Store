@@ -1,6 +1,6 @@
 import { userId_local } from '../constants'
 
-const BACKEND_URL = 'http://127.0.0.1:5001'
+const BACKEND_URL = 'https://whatsappdbp.pythonanywhere.com'
 
 const userId = localStorage.getItem(userId_local)
 
