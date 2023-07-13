@@ -181,6 +181,9 @@ def registeruser():
             new_usuario = USUARIO(usuario_id = new_persona.id)
             db.session.add(new_usuario)
             db.session.commit()
+            new_creador = CREADOR(creador_id = new_persona.id)
+            db.session.add(new_creador)
+            db.session.commit()
             return jsonify(new_persona)
         except:
             error_message = 'Ya existe este nombre de usuario.'
