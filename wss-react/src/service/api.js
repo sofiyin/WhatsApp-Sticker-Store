@@ -4,6 +4,8 @@ const BACKEND_URL = 'http://127.0.0.1:5001'
 
 const userId = localStorage.getItem(userId_local)
 
+// Sstickers
+
 export const fetchStickers = async () => {
 	const response = await fetch(`${BACKEND_URL}/stickers`)
 
@@ -15,6 +17,34 @@ export const fetchStickers = async () => {
 	console.log(response);
   return response.json();
 }
+
+export const postSticker = async (body) => {
+	const response = await fetch(`${BACKEND_URL}/stickers-creador/${body.idusuario}`, {
+		method: 'POST',
+		body: JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json' }
+	})
+
+	if (!response.ok) {
+		console.log('Error al crear el sticker')
+		return undefined
+	}
+
+	return response.json()
+}
+
+export const stickerInfo = async (id) => {
+	const response = await fetch(`${BACKEND_URL}/stickers/${id}`)
+
+	if (!response.ok) {
+		console.log('Error al obtener la información del sticker')
+		return undefined
+	}
+
+	return response.json()
+}
+
+// Login and Register
 
 export const registerUser = async (body) => {
 	const response = await fetch(`${BACKEND_URL}/register-user`, {
@@ -46,6 +76,8 @@ export const loginUser = async (body) => {
 	return response.json()
 }
 
+// User Info
+
 export const getUser = async (id) => {
 	const response = await fetch(`${BACKEND_URL}/personas/${id}`)
 
@@ -62,21 +94,6 @@ export const userSticker = async (id) => {
 
 	if (!response.ok) {
 		console.log('Error al obtener los stickers del usuario')
-		return undefined
-	}
-
-	return response.json()
-}
-
-export const postSticker = async (body) => {
-	const response = await fetch(`${BACKEND_URL}/stickers-creador/${body.idusuario}`, {
-		method: 'POST',
-		body: JSON.stringify(body),
-		headers: { 'Content-Type': 'application/json' }
-	})
-
-	if (!response.ok) {
-		console.log('Error al crear el sticker')
 		return undefined
 	}
 

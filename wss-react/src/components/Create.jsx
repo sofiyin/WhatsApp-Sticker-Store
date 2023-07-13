@@ -47,7 +47,7 @@ export const Create = () => {
       likes: 0,
       Foto: url,
       FechaSubida: new Date(),
-      idusuario: Params.id
+      S_CREADOR_id: Params.id
     }
 
     postSticker(body)

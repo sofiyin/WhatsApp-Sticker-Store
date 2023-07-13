@@ -1,38 +1,64 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { 
+	faCircleXmark, 
+	faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { stickerInfo, getUser } from '../service/api';
 import '../css/StickersInfo.css'
 
 export const StickersInfo = ({mostrarSticker, idImage}) => {
+	const [sticker, setSticker] = useState({})
+	const [user, setUser] = useState({})
+	
 
-	console.log(idImage);
+	const callStickerInfo = async () => {
+		const response = await stickerInfo(idImage)
+		setSticker(response || {})
+		callUserInfo(response.S_CREADOR_id)
+	}
+
+	const callUserInfo = async (id) => {
+		const response = await getUser(id)
+		setUser(response || {})
+	}
+
+	useEffect (() => {
+		callStickerInfo()
+		return () => {
+		}
+	}, [])
 
 	return (
 		<div className="transparent">
 			<div className='stickerInfo'>
 				<div className="stickerInfo-img">
-					<div className="back" onClick={mostrarSticker}><FontAwesomeIcon icon={faCircleXmark} /></div>
+					<div 
+						className="back" 
+						onClick={mostrarSticker}>
+						<FontAwesomeIcon icon={faCircleXmark} />
+					</div>
+					<img src={sticker.Foto} alt={sticker.nombre} />
 				</div>
 				<div className="stickerInfo-maincontent">
 					<div className="stickerInfo-carrito">
 						<FontAwesomeIcon icon={faCartShopping} />
 					</div>
 					<div className="stickerInfo-content">
-						<div className="stickerInfo__title"> Title </div>
+						<div className="stickerInfo__title"> {sticker.nombre} </div>
 						<div className="stickerInfo__description">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem repellat incidunt, ea maxime sit est iusto beatae? Voluptas consectetur 
+							{sticker.descripcion}
 						</div>
-						<div className="stickerInfo__date"> 13-06-2023 </div>
+						<div className="stickerInfo__date"> {sticker.FechaSubida } </div>
 						<div className="stickerInfo__about">
 							<div className="about-category"> Category Pro </div>
 							<div className="about-likes">
 								<div className="likes-icon"></div>
-								<div className="likes-number"> 100 Likes </div>
+								<div className="likes-number"> {`${sticker.likes} likes`} </div>
 							</div>
 						</div>
 						<div className="stickerInfo__author">
 							<div className="author-img"></div>
-							<div className="author-nickname">Autor</div>
+							<div className="author-nickname"> {user.username} </div>
 						</div>
 						<div className="stickerInfo-comments">
 							<div className="comment-title"> # comments </div>

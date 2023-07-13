@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.sql import func
 from flask import Flask, jsonify,  request, render_template,session,redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import json
 app = Flask(__name__)
 
@@ -78,6 +79,7 @@ class STICKER(db.Model):
     likes: int
     Foto:str
     FechaSubida:str
+    S_CREADOR_id: int
     
 
     idsticker = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -172,6 +174,9 @@ def insert_creador(data):
     db.session.add(creador)
     db.session.commit()
     return "SUCCESS"
+
+with app.app_context():
+    db.create_all()
 
 
 CORS(app)
@@ -397,9 +402,5 @@ def login():
                 return 'Contraseña incorrecta.'
         
 
-
-with app.app_context():
-        db.create_all()
-
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, port=5001, host='0.0.0.0')
